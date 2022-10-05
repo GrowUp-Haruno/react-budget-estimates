@@ -1,7 +1,11 @@
 import { Table, TableContainer, Th, Tr, Td, Thead, Tbody, Button } from "@chakra-ui/react";
 import { FC } from "react";
-import { budgetListType } from "../MainContents/MainContents.model";
-export const BudgetList: FC<{ budgetlist: budgetListType }> = ({ budgetlist }) => {
+import { budgetListType } from "../../models/modelBadget";
+import { onBadgetModalOpenType } from "./MainContents.type";
+export const BudgetList: FC<{ budgetlist: budgetListType; onBadgetModalOpen: onBadgetModalOpenType }> = ({
+  budgetlist,
+  onBadgetModalOpen,
+}) => {
   return (
     <TableContainer>
       <Table size={["md", "lg"]}>
@@ -13,12 +17,12 @@ export const BudgetList: FC<{ budgetlist: budgetListType }> = ({ budgetlist }) =
           </Tr>
         </Thead>
         <Tbody>
-          {budgetlist.map((budget) => (
+          {budgetlist.map((budget,i) => (
             <Tr key={budget.category}>
               <Td>{budget.category}</Td>
               <Td>{budget.subtotal.toLocaleString("ja-JP")}</Td>
               <Td>
-                <Button>詳細</Button>
+                <Button onClick={() => onBadgetModalOpen(i)}>詳細</Button>
               </Td>
             </Tr>
           ))}

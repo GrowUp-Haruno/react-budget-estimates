@@ -10,3 +10,4 @@ export type budgetListType = Array<{
   category: string;
   subtotal: number;
 }>;
+

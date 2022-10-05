@@ -1,10 +1,26 @@
-import { Stack, Text } from "@chakra-ui/react";
+import { Stack, useDisclosure } from "@chakra-ui/react";
 import { FC, useEffect, useState } from "react";
-import { BudgetList } from "../BudgetList/BudgetList";
-import { budgetListType, budgetType } from "./MainContents.model";
+import { BudgetList } from "./BudgetList";
+import { BudgetModal } from "./BudgetModal";
+import { BudgetTotal } from "./BudgetTotal";
+import { budgetListType, budgetType } from "../../models/modelBadget";
+import { MainContentsStyle } from "./MainContents.style";
+import { onBadgetModalCloseType, onBadgetModalOpenType } from "./MainContents.type";
 
 export const MainContents: FC = () => {
   const [budgets, setBudgets] = useState<budgetType[]>([]);
+  const [budgetIndex, setBudgetIndex] = useState<number>(0);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const onBadgetModalOpen: onBadgetModalOpenType = (index) => {
+    setBudgetIndex(index);
+    onOpen();
+  };
+
+  const onBadgetModalClose: onBadgetModalCloseType = () => {
+    setBudgetIndex(0);
+    onClose();
+  };
 
   const budgetlist: budgetListType = budgets.map((budget) =>
     budget.budgetDetails.reduce(
@@ -31,9 +47,15 @@ export const MainContents: FC = () => {
   }, []);
 
   return (
-    <Stack as="main" flexGrow={1} justifyContent="start" alignItems="center" spacing={8}>
-      <BudgetList budgetlist={budgetlist} />
-      <Text>予算合計：{total.toLocaleString("ja-JP")}円</Text>
+    <Stack {...MainContentsStyle}>
+      <BudgetList budgetlist={budgetlist} onBadgetModalOpen={onBadgetModalOpen} />
+      <BudgetTotal total={total} />
+      <BudgetModal
+        isOpen={isOpen}
+        onBadgetModalClose={onBadgetModalClose}
+        budgets={budgets}
+        budgetIndex={budgetIndex}
+      />
     </Stack>
   );
 };
