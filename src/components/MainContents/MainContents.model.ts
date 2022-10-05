@@ -5,3 +5,8 @@ export type budgetType = {
     price: number;
   }>;
 };
+
+export type budgetListType = Array<{
+  category: string;
+  subtotal: number;
+}>;

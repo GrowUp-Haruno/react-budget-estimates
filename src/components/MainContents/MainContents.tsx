@@ -1,12 +1,27 @@
-import { Flex } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { FC, useEffect, useState } from "react";
 import { BudgetList } from "../BudgetList/BudgetList";
-import { budgetType } from "./MainContents.model";
+import { budgetListType, budgetType } from "./MainContents.model";
 
 export const MainContents: FC = () => {
-  const [budgetList, setBudgetList] = useState<budgetType[]>([]);
+  const [budgets, setBudgets] = useState<budgetType[]>([]);
+
+  const budgetlist: budgetListType = budgets.map((budget) =>
+    budget.budgetDetails.reduce(
+      (newObj: { category: string; subtotal: number }, curr) => ({
+        ...newObj,
+        subtotal: newObj.subtotal + curr.price,
+      }),
+      {
+        category: budget.category,
+        subtotal: 0,
+      }
+    )
+  );
+  const total = budgetlist.reduce((total, curr) => total + curr.subtotal, 0);
+
   useEffect(() => {
-    setBudgetList([
+    setBudgets([
       { category: "移動費", budgetDetails: [{ name: "電車賃", price: 10000 }] },
       { category: "宿泊費", budgetDetails: [{ name: "アパホテル", price: 12000 }] },
       { category: "食費費", budgetDetails: [{ name: "夢庵", price: 2000 }] },
@@ -16,8 +31,9 @@ export const MainContents: FC = () => {
   }, []);
 
   return (
-    <Flex as="main" flexGrow={1} justifyContent="center">
-      <BudgetList budgetList={budgetList} />
-    </Flex>
+    <Stack as="main" flexGrow={1} justifyContent="start" alignItems="center" spacing={8}>
+      <BudgetList budgetlist={budgetlist} />
+      <Text>予算合計：{total.toLocaleString("ja-JP")}円</Text>
+    </Stack>
   );
 };
