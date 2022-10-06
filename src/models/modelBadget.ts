@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type budgetType = {
   category: string;
   budgetDetails: Array<{
@@ -11,3 +13,7 @@ export type budgetListType = Array<{
   subtotal: number;
 }>;
 
+export type recordsType = Array<{
+  id: number;
+  fields: ReactNode[];
+}>;

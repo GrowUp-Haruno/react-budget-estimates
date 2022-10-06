@@ -1,13 +1,13 @@
 import { HStack, Td, Tr, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { budgetListType, budgetType } from "../../models/modelBadget";
+import { budgetListType, budgetType, recordsType } from "../../models/modelBadget";
 import { PrimaryButto, SecondaryButton } from "../Atom/Button";
 
 type useMainContentsType = () => {
   isOpen: boolean;
   onClose: () => void;
   total: number;
-  BudgetlistTable: JSX.Element[];
+  budgetListRecords: recordsType;
   BudgetModalTable: JSX.Element[];
 };
 
@@ -33,16 +33,17 @@ export const useMainContents: useMainContentsType = () => {
       }
     )
   );
-
-  const BudgetlistTable = budgetlist.map((budget, i) => (
-    <Tr key={budget.category}>
-      <Td>{budget.category}</Td>
-      <Td>{budget.subtotal.toLocaleString("ja-JP")}</Td>
-      <Td isNumeric>
-        <PrimaryButto onClick={() => onBadgetModalOpen(i)}>詳細</PrimaryButto>
-      </Td>
-    </Tr>
-  ));
+  
+  const budgetListRecords: recordsType = budgetlist.map(({ category, subtotal }, i) => ({
+    id: i,
+    fields: [
+      category,
+      subtotal,
+      <PrimaryButto key={category} onClick={() => onBadgetModalOpen(i)}>
+        詳細
+      </PrimaryButto>,
+    ],
+  }));
 
   const total = budgetlist.reduce((total, curr) => total + curr.subtotal, 0);
 
@@ -73,7 +74,8 @@ export const useMainContents: useMainContentsType = () => {
     isOpen,
     onClose,
     total,
-    BudgetlistTable,
+    // BudgetlistTable,
+    budgetListRecords,
     BudgetModalTable,
   };
 };

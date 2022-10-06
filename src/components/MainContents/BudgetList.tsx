@@ -1,20 +1,13 @@
-import { Table, TableContainer, Th, Tr, Thead, Tbody, Container } from "@chakra-ui/react";
-import { FC, ReactNode } from "react";
-export const BudgetList: FC<{ BudgetlistTable: ReactNode }> = ({ BudgetlistTable }) => {
+import { Container } from "@chakra-ui/react";
+import { FC } from "react";
+import { recordsType } from "../../models/modelBadget";
+import { PrimaryTable } from "../Atom/Table";
+export const BudgetList: FC<{
+  budgetListRecords: recordsType;
+}> = ({ budgetListRecords }) => {
   return (
-    <Container textAlign="center">
-      <TableContainer>
-        <Table size={["sm", "md"]}>
-          <Thead>
-            <Tr>
-              <Th>カテゴリ</Th>
-              <Th>小計</Th>
-              <Th isNumeric>詳細リンク</Th>
-            </Tr>
-          </Thead>
-          <Tbody>{BudgetlistTable}</Tbody>
-        </Table>
-      </TableContainer>
+    <Container>
+      <PrimaryTable columnNames={["カテゴリ", "小計", "詳細リンク"]} records={budgetListRecords} />
     </Container>
   );
 };

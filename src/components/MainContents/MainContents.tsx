@@ -7,11 +7,11 @@ import { MainContentsStyle } from "./MainContents.style";
 import { useMainContents } from "./MainContents.hook";
 
 export const MainContents: FC = () => {
-  const { isOpen, onClose, total, BudgetlistTable, BudgetModalTable } = useMainContents();
+  const { isOpen, onClose, total, budgetListRecords, BudgetModalTable } = useMainContents();
 
   return (
     <Stack {...MainContentsStyle}>
-      <BudgetList BudgetlistTable={BudgetlistTable} />
+      <BudgetList budgetListRecords={budgetListRecords} />
       <BudgetTotal total={total} />
       <BudgetModal isOpen={isOpen} onClose={onClose} BudgetModalTable={BudgetModalTable} />
     </Stack>
