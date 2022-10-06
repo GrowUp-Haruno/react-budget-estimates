@@ -1,4 +1,4 @@
-import { HStack, Td, Tr, useDisclosure } from "@chakra-ui/react";
+import { HStack, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { budgetListType, budgetType, recordsType } from "../../models/modelBadget";
 import { PrimaryButto, SecondaryButton } from "../Atom/Button";
@@ -8,7 +8,7 @@ type useMainContentsType = () => {
   onClose: () => void;
   total: number;
   budgetListRecords: recordsType;
-  BudgetModalTable: JSX.Element[];
+  BudgetModalRecords: recordsType;
 };
 
 export const useMainContents: useMainContentsType = () => {
@@ -33,7 +33,7 @@ export const useMainContents: useMainContentsType = () => {
       }
     )
   );
-  
+
   const budgetListRecords: recordsType = budgetlist.map(({ category, subtotal }, i) => ({
     id: i,
     fields: [
@@ -47,18 +47,17 @@ export const useMainContents: useMainContentsType = () => {
 
   const total = budgetlist.reduce((total, curr) => total + curr.subtotal, 0);
 
-  const BudgetModalTable = budgets[budgetIndex].budgetDetails.map((detail) => (
-    <Tr key={detail.name}>
-      <Td>{detail.name}</Td>
-      <Td>{detail.price}</Td>
-      <Td isNumeric>
-        <HStack justify="end">
-          <PrimaryButto>変更</PrimaryButto>
-          <SecondaryButton>削除</SecondaryButton>
-        </HStack>
-      </Td>
-    </Tr>
-  ));
+  const BudgetModalRecords: recordsType = budgets[budgetIndex].budgetDetails.map(({ name, price }, i) => ({
+    id: i,
+    fields: [
+      name,
+      price,
+      <HStack key={i} justify="end">
+        <PrimaryButto>変更</PrimaryButto>
+        <SecondaryButton>削除</SecondaryButton>
+      </HStack>,
+    ],
+  }));
 
   useEffect(() => {
     setBudgets([
@@ -74,8 +73,7 @@ export const useMainContents: useMainContentsType = () => {
     isOpen,
     onClose,
     total,
-    // BudgetlistTable,
     budgetListRecords,
-    BudgetModalTable,
+    BudgetModalRecords,
   };
 };
