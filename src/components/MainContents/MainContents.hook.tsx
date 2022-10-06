@@ -1,6 +1,7 @@
-import { Button, Td, Tr, useDisclosure } from "@chakra-ui/react";
+import { HStack, Td, Tr, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { budgetListType, budgetType } from "../../models/modelBadget";
+import { PrimaryButto, SecondaryButton } from "../Atom/Button";
 
 type useMainContentsType = () => {
   isOpen: boolean;
@@ -37,8 +38,8 @@ export const useMainContents: useMainContentsType = () => {
     <Tr key={budget.category}>
       <Td>{budget.category}</Td>
       <Td>{budget.subtotal.toLocaleString("ja-JP")}</Td>
-      <Td>
-        <Button onClick={() => onBadgetModalOpen(i)}>詳細</Button>
+      <Td isNumeric>
+        <PrimaryButto onClick={() => onBadgetModalOpen(i)}>詳細</PrimaryButto>
       </Td>
     </Tr>
   ));
@@ -49,6 +50,12 @@ export const useMainContents: useMainContentsType = () => {
     <Tr key={detail.name}>
       <Td>{detail.name}</Td>
       <Td>{detail.price}</Td>
+      <Td isNumeric>
+        <HStack justify="end">
+          <PrimaryButto>変更</PrimaryButto>
+          <SecondaryButton>削除</SecondaryButton>
+        </HStack>
+      </Td>
     </Tr>
   ));
 

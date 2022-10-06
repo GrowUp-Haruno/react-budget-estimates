@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -15,6 +14,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { FC, ReactNode } from "react";
+import { PrimaryButto } from "../Atom/Button";
 
 export const BudgetModal: FC<{
   isOpen: boolean;
@@ -22,18 +22,19 @@ export const BudgetModal: FC<{
   BudgetModalTable: ReactNode;
 }> = ({ isOpen, onClose, BudgetModalTable }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size={["sm", "md", "lg"]}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>予算設定</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <TableContainer>
-            <Table>
+            <Table size={["sm", "md", "lg"]}>
               <Thead>
                 <Tr>
                   <Th>内容</Th>
                   <Th>料金</Th>
+                  <Th isNumeric></Th>
                 </Tr>
               </Thead>
               <Tbody>{BudgetModalTable}</Tbody>
@@ -41,7 +42,7 @@ export const BudgetModal: FC<{
           </TableContainer>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={onClose}>閉じる</Button>
+          <PrimaryButto onClick={onClose}>閉じる</PrimaryButto>
         </ModalFooter>
       </ModalContent>
     </Modal>
