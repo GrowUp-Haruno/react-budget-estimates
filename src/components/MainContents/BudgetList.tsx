@@ -1,11 +1,6 @@
-import { Table, TableContainer, Th, Tr, Td, Thead, Tbody, Button } from "@chakra-ui/react";
-import { FC } from "react";
-import { budgetListType } from "../../models/modelBadget";
-import { onBadgetModalOpenType } from "./MainContents.type";
-export const BudgetList: FC<{ budgetlist: budgetListType; onBadgetModalOpen: onBadgetModalOpenType }> = ({
-  budgetlist,
-  onBadgetModalOpen,
-}) => {
+import { Table, TableContainer, Th, Tr, Thead, Tbody } from "@chakra-ui/react";
+import { FC, ReactNode } from "react";
+export const BudgetList: FC<{ BudgetlistTable: ReactNode }> = ({ BudgetlistTable }) => {
   return (
     <TableContainer>
       <Table size={["md", "lg"]}>
@@ -16,17 +11,7 @@ export const BudgetList: FC<{ budgetlist: budgetListType; onBadgetModalOpen: onB
             <Th>詳細リンク</Th>
           </Tr>
         </Thead>
-        <Tbody>
-          {budgetlist.map((budget,i) => (
-            <Tr key={budget.category}>
-              <Td>{budget.category}</Td>
-              <Td>{budget.subtotal.toLocaleString("ja-JP")}</Td>
-              <Td>
-                <Button onClick={() => onBadgetModalOpen(i)}>詳細</Button>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
+        <Tbody>{BudgetlistTable}</Tbody>
       </Table>
     </TableContainer>
   );

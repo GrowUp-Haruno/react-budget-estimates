@@ -7,27 +7,41 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Table,
+  TableContainer,
+  Tbody,
+  Th,
+  Thead,
+  Tr,
 } from "@chakra-ui/react";
-import { FC } from "react";
-import { budgetType } from "../../models/modelBadget";
-import { onBadgetModalCloseType } from "./MainContents.type";
+import { FC, ReactNode } from "react";
 
 export const BudgetModal: FC<{
   isOpen: boolean;
-  onBadgetModalClose: onBadgetModalCloseType;
-  budgets: budgetType[];
-  budgetIndex: number;
-}> = ({ isOpen, onBadgetModalClose,budgets,budgetIndex }) => {
-  console.log(budgets[budgetIndex]);
+  onClose: () => void;
+  BudgetModalTable: ReactNode;
+}> = ({ isOpen, onClose, BudgetModalTable }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onBadgetModalClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>予算設定</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>test</ModalBody>
+        <ModalBody>
+          <TableContainer>
+            <Table>
+              <Thead>
+                <Tr>
+                  <Th>内容</Th>
+                  <Th>料金</Th>
+                </Tr>
+              </Thead>
+              <Tbody>{BudgetModalTable}</Tbody>
+            </Table>
+          </TableContainer>
+        </ModalBody>
         <ModalFooter>
-          <Button onClick={onBadgetModalClose}>閉じる</Button>
+          <Button onClick={onClose}>閉じる</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
