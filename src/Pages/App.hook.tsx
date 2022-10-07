@@ -2,7 +2,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { budgetListType, budgetType, recordsType } from "./App.model";
 
-type useAppType = () => {
+export type AppType = {
   isOpen: boolean;
   onClose: () => void;
   onBadgetModalOpen: (index: number) => void;
@@ -10,6 +10,7 @@ type useAppType = () => {
   budgetListRecords: recordsType;
   BudgetModalRecords: recordsType;
 };
+type useAppType = () => AppType;
 
 export const useApp: useAppType = () => {
   const [budgets, setBudgets] = useState<budgetType[]>([

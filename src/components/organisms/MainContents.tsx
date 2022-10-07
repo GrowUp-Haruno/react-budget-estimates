@@ -1,18 +1,12 @@
 import { Stack } from "@chakra-ui/react";
 import { FC } from "react";
-import { BudgetList } from "../organisms/BudgetList";
-import { BudgetTotal } from "../organisms/BudgetTotal";
-import { BudgetModal } from "../organisms/BudgetModal";
-import { recordsType } from "../../Pages/App.model";
+import { BudgetList } from "../molecules/BudgetList";
+// import { recordsType } from "../../Pages/App.model";
+import { AppType } from "../../Pages/App.hook";
+import { BudgetTotal } from "../molecules/BudgetTotal";
+import { BudgetModal } from "../molecules/BudgetModal";
 
-export const MainContents: FC<{
-  isOpen: boolean;
-  onClose: () => void;
-  onBadgetModalOpen: (index: number) => void;
-  total: number;
-  budgetListRecords: recordsType;
-  BudgetModalRecords: recordsType;
-}> = ({
+export const MainContents: FC<AppType> = ({
   isOpen,
   onClose,
   onBadgetModalOpen,
