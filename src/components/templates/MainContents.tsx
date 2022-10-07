@@ -1,10 +1,10 @@
 import { Stack } from "@chakra-ui/react";
 import { FC } from "react";
-import { BudgetList } from "../molecules/BudgetList";
+import { BudgetList } from "../organisms/BudgetList";
 // import { recordsType } from "../../Pages/App.model";
 import { AppType } from "../../Pages/App.hook";
-import { BudgetTotal } from "../molecules/BudgetTotal";
-import { BudgetModal } from "../molecules/BudgetModal";
+import { BudgetTotal } from "../organisms/BudgetTotal";
+// import { BudgetModal } from "../molecules/BudgetModal";
 
 export const MainContents: FC<AppType> = ({
   isOpen,
@@ -23,15 +23,16 @@ export const MainContents: FC<AppType> = ({
       spacing={8}
     >
       <BudgetList
-        budgetListRecords={budgetListRecords}
+        columnNames={["カテゴリ", "料金", "詳細"]}
+        records={budgetListRecords}
         onBadgetModalOpen={onBadgetModalOpen}
       />
       <BudgetTotal total={total} />
-      <BudgetModal
+      {/* <BudgetModal
         isOpen={isOpen}
         onClose={onClose}
         BudgetModalRecords={BudgetModalRecords}
-      />
+      /> */}
     </Stack>
   );
 };
