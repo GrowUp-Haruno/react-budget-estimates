@@ -10,6 +10,7 @@ export type AppType = {
   budgetListRecords: recordsType;
   BudgetModalRecords: recordsType;
 };
+
 type useAppType = () => AppType;
 
 export const useApp: useAppType = () => {
