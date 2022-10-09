@@ -12,9 +12,9 @@ import {
 type PrimaryModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
-  Body: ReactNode;
-  Footer: ReactNode;
+  title?: string;
+  Body?: ReactNode;
+  Foot?: ReactNode;
 };
 
 export const PrimaryModal: FC<PrimaryModalProps> = ({
@@ -22,7 +22,7 @@ export const PrimaryModal: FC<PrimaryModalProps> = ({
   onClose,
   title,
   Body,
-  Footer,
+  Foot,
 }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={["sm", "md", "lg"]}>
@@ -31,7 +31,7 @@ export const PrimaryModal: FC<PrimaryModalProps> = ({
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>{Body}</ModalBody>
-        <ModalFooter>{Footer}</ModalFooter>
+        <ModalFooter>{Foot}</ModalFooter>
       </ModalContent>
     </Modal>
   );

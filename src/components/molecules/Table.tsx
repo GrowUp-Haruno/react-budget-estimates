@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Td, Th, Tr } from "@chakra-ui/react";
 import { recordsType } from "../../Pages/App.model";
-import { DetailButton } from "./Button";
+import { ChangeDeleteButton, DetailButton } from "./Button";
 
 export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({
   columnNames,
@@ -21,22 +21,12 @@ export const PrimaryTableBody: FC<{
   records: recordsType;
   detailButtonCallback?: (index: number) => void;
 }> = ({ records, detailButtonCallback }) => {
-  console.log(detailButtonCallback === undefined);
   return (
     <>
       {records.map((record, i) => (
         <Tr key={record.id}>
           {record.fields.map((field, i) => (
-            <Td
-              key={i}
-              isNumeric={
-                detailButtonCallback === undefined
-                  ? record.fields.length - 1 === i
-                  : false
-              }
-            >
-              {field}
-            </Td>
+            <Td key={i}>{field}</Td>
           ))}
           {detailButtonCallback === undefined ? (
             <></>
@@ -46,6 +36,16 @@ export const PrimaryTableBody: FC<{
                 onClick={() => {
                   detailButtonCallback(i);
                 }}
+              />
+            </Td>
+          )}
+          {detailButtonCallback === undefined ? (
+            <></>
+          ) : (
+            <Td isNumeric>
+              <ChangeDeleteButton
+                handleChange={() => {}}
+                handleDelete={() => {}}
               />
             </Td>
           )}
