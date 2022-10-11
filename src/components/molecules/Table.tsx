@@ -1,26 +1,15 @@
-import { FC } from "react";
-import { Td, Th, Tr } from "@chakra-ui/react";
+import { FC, Fragment } from "react";
+import { HStack, Td, Tr } from "@chakra-ui/react";
 import { recordsType } from "../../Pages/App.model";
-import { ChangeDeleteButton, DetailButton } from "./Button";
+import { ChangeButton, DeleteButton, DetailButton } from "./Button";
 
-export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({
-  columnNames,
-}) => {
-  return (
-    <Tr>
-      {columnNames.map((columnName, i) => (
-        <Th key={columnName} isNumeric={columnNames.length - 1 === i}>
-          {columnName}
-        </Th>
-      ))}
-    </Tr>
-  );
-};
-
-export const PrimaryTableBody: FC<{
+export const TableBody: FC<{
   records: recordsType;
-  detailButtonCallback?: (index: number) => void;
-}> = ({ records, detailButtonCallback }) => {
+  optionButtons?: Array<{
+    buttonType: "detail" | "change" | "delete";
+    callback: (index: number) => void;
+  }>;
+}> = ({ records, optionButtons }) => {
   return (
     <>
       {records.map((record, i) => (
@@ -28,25 +17,30 @@ export const PrimaryTableBody: FC<{
           {record.fields.map((field, i) => (
             <Td key={i}>{field}</Td>
           ))}
-          {detailButtonCallback === undefined ? (
+          {optionButtons === undefined ? (
             <></>
           ) : (
-            <Td isNumeric>
-              <DetailButton
-                onClick={() => {
-                  detailButtonCallback(i);
-                }}
-              />
-            </Td>
-          )}
-          {detailButtonCallback === undefined ? (
-            <></>
-          ) : (
-            <Td isNumeric>
-              <ChangeDeleteButton
-                handleChange={() => {}}
-                handleDelete={() => {}}
-              />
+            <Td>
+              <HStack justify="end">
+                {optionButtons.map(({ buttonType, callback }) => {
+                  switch (buttonType) {
+                    case "detail":
+                      return (
+                        <DetailButton key={i} onClick={() => callback(i)} />
+                      );
+                    case "change":
+                      return (
+                        <ChangeButton key={i} onClick={() => callback(i)} />
+                      );
+                    case "delete":
+                      return (
+                        <DeleteButton key={i} onClick={() => callback(i)} />
+                      );
+                    default:
+                      return <Fragment key={i}></Fragment>;
+                  }
+                })}
+              </HStack>
             </Td>
           )}
         </Tr>

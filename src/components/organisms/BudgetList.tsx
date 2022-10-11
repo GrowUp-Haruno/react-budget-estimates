@@ -1,8 +1,8 @@
 import { Container } from "@chakra-ui/react";
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
-import { PrimaryTable } from "../atoms/Table";
-import { PrimaryTableBody, PrimaryTableHead } from "../molecules/Table";
+import { PrimaryTable, PrimaryTableHead } from "../atoms/Table";
+import { TableBody } from "../molecules/Table";
 
 export const BudgetList: FC<{
   columnNames: string[];
@@ -14,9 +14,11 @@ export const BudgetList: FC<{
       <PrimaryTable
         Head={<PrimaryTableHead columnNames={columnNames} />}
         Body={
-          <PrimaryTableBody
+          <TableBody
             records={records}
-            detailButtonCallback={onBadgetModalOpen}
+            optionButtons={[
+              { buttonType: "detail", callback: onBadgetModalOpen },
+            ]}
           />
         }
       />
