@@ -16,7 +16,6 @@ export const MainContents: FC<AppType> = ({
   return (
     <MainLayout>
       <BudgetList
-        columnNames={["カテゴリ", "料金", ""]}
         records={budgetListRecords}
         onBadgetModalOpen={onBadgetModalOpen}
       />

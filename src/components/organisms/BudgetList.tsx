@@ -5,14 +5,13 @@ import { PrimaryTable, PrimaryTableHead } from "../atoms/Table";
 import { TableBody } from "../molecules/Table";
 
 export const BudgetList: FC<{
-  columnNames: string[];
   records: recordsType;
   onBadgetModalOpen: (index: number) => void;
-}> = ({ columnNames, records, onBadgetModalOpen }) => {
+}> = ({  records, onBadgetModalOpen }) => {
   return (
     <Container>
       <PrimaryTable
-        Head={<PrimaryTableHead columnNames={columnNames} />}
+        Head={<PrimaryTableHead columnNames={["カテゴリ", "料金", ""]} />}
         Body={
           <TableBody
             records={records}
