@@ -1,9 +1,9 @@
-import { Stack } from "@chakra-ui/react";
 import { FC } from "react";
 import { BudgetList } from "../organisms/BudgetList";
 import { AppType } from "../../Pages/App.hook";
 import { BudgetTotal } from "../organisms/BudgetTotal";
 import { BudgetModal } from "../organisms/BudgetModal";
+import { MainLayout } from "../atoms/Layout";
 
 export const MainContents: FC<AppType> = ({
   isOpen,
@@ -14,13 +14,7 @@ export const MainContents: FC<AppType> = ({
   BudgetModalRecords,
 }) => {
   return (
-    <Stack
-      as="main"
-      flexGrow={1}
-      justifyContent="start"
-      alignItems="center"
-      spacing={8}
-    >
+    <MainLayout>
       <BudgetList
         columnNames={["カテゴリ", "料金", ""]}
         records={budgetListRecords}
@@ -32,6 +26,6 @@ export const MainContents: FC<AppType> = ({
         onClose={onClose}
         BudgetModalRecords={BudgetModalRecords}
       />
-    </Stack>
+    </MainLayout>
   );
 };

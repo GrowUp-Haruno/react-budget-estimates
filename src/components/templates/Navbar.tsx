@@ -1,12 +1,13 @@
-import { Heading, Center } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 import { FC } from "react";
+import { NavbarLayout } from "../atoms/Layout";
 
 export const Navbar: FC = () => {
   return (
-    <Center as="header" bgColor="green.300" py={4}>
+    <NavbarLayout>
       <Heading as="h1" color="gray.50">
         旅費計算機
       </Heading>
-    </Center>
+    </NavbarLayout>
   );
 };
