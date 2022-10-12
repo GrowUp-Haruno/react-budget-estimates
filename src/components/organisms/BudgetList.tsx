@@ -1,7 +1,7 @@
 import { Container } from "@chakra-ui/react";
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
-import { DetailButton } from "../molecules/Button";
+import { DetailButton } from "../molecules/CustomButton";
 import { DataGrid } from "../molecules/DataGrid";
 
 export const BudgetList: FC<{

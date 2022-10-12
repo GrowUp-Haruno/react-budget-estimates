@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
 import { PrimaryModal } from "../atoms/Modal";
-import { ChangeButton, CloseButon, DeleteButton } from "../molecules/Button";
+import { ChangeButton, CloseButon, DeleteButton } from "../molecules/CustomButton";
 import { DataGrid } from "../molecules/DataGrid";
 
 export const BudgetModal: FC<{
