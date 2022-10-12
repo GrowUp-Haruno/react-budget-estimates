@@ -12,18 +12,17 @@ export const MainContents: FC<AppType> = ({
   total,
   budgetListRecords,
   BudgetModalRecords,
+  onBadgetDetailDelete,
 }) => {
   return (
     <MainLayout>
-      <BudgetList
-        records={budgetListRecords}
-        onBadgetModalOpen={onBadgetModalOpen}
-      />
+      <BudgetList records={budgetListRecords} onBadgetModalOpen={onBadgetModalOpen} />
       <BudgetTotal total={total} />
       <BudgetModal
         isOpen={isOpen}
         onClose={onClose}
         BudgetModalRecords={BudgetModalRecords}
+        onBadgetDetailDelete={onBadgetDetailDelete}
       />
     </MainLayout>
   );

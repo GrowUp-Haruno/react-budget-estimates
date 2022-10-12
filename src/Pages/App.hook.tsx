@@ -6,6 +6,7 @@ export type AppType = {
   isOpen: boolean;
   onClose: () => void;
   onBadgetModalOpen: (index: number) => void;
+  onBadgetDetailDelete: (index: number) => void;
   total: number;
   budgetListRecords: recordsType;
   BudgetModalRecords: recordsType;
@@ -21,6 +22,14 @@ export const useApp: useAppType = () => {
   const onBadgetModalOpen = (index: number): void => {
     setBudgetIndex(index);
     onOpen();
+  };
+
+  /** 予算詳細を削除 */
+  const onBadgetDetailDelete = (index: number): void => {
+    setBudgets((prev) => {
+      prev[budgetIndex].budgetDetails.splice(index, 1);
+      return [...prev];
+    });
   };
 
   const budgetlist: budgetListType = budgets.map((budget) =>
@@ -62,6 +71,7 @@ export const useApp: useAppType = () => {
     isOpen,
     onClose,
     onBadgetModalOpen,
+    onBadgetDetailDelete,
     total,
     budgetListRecords,
     BudgetModalRecords,
