@@ -14,9 +14,7 @@ export type AppType = {
 type useAppType = () => AppType;
 
 export const useApp: useAppType = () => {
-  const [budgets, setBudgets] = useState<budgetType[]>([
-    { category: "", budgetDetails: [] },
-  ]);
+  const [budgets, setBudgets] = useState<budgetType[]>([{ category: "", budgetDetails: [] }]);
   const [budgetIndex, setBudgetIndex] = useState<number>(0);
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -38,18 +36,14 @@ export const useApp: useAppType = () => {
     )
   );
 
-  const budgetListRecords: recordsType = budgetlist.map(
-    ({ category, subtotal }, i) => ({
-      id: i,
-      fields: [category, subtotal.toLocaleString("ja-JP")],
-    })
-  );
+  const budgetListRecords: recordsType = budgetlist.map(({ category, subtotal }, i) => ({
+    id: i,
+    fields: [category, subtotal.toLocaleString("ja-JP")],
+  }));
 
   const total = budgetlist.reduce((total, curr) => total + curr.subtotal, 0);
 
-  const BudgetModalRecords: recordsType = budgets[
-    budgetIndex
-  ].budgetDetails.map(({ name, price }, i) => ({
+  const BudgetModalRecords: recordsType = budgets[budgetIndex].budgetDetails.map(({ name, price }, i) => ({
     id: i,
     fields: [name, price.toLocaleString("ja-JP")],
   }));
@@ -57,16 +51,10 @@ export const useApp: useAppType = () => {
   useEffect(() => {
     setBudgets([
       { category: "移動費", budgetDetails: [{ name: "電車賃", price: 10000 }] },
-      {
-        category: "宿泊費",
-        budgetDetails: [{ name: "アパホテル", price: 12000 }],
-      },
+      { category: "宿泊費", budgetDetails: [{ name: "アパホテル", price: 12000 }] },
       { category: "食費費", budgetDetails: [{ name: "夢庵", price: 2000 }] },
       { category: "観光費", budgetDetails: [{ name: "観光船", price: 1000 }] },
-      {
-        category: "お土産代",
-        budgetDetails: [{ name: "お土産代", price: 10000 }],
-      },
+      { category: "お土産代", budgetDetails: [{ name: "お土産代", price: 10000 }] },
     ]);
   }, []);
 
