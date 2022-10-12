@@ -3,6 +3,9 @@ export type budgetType = {
   budgetDetails: Array<{
     name: string;
     price: number;
+    isDelete: boolean;
+    isUpdate: boolean;
+    isChange: boolean;
   }>;
 };
 
@@ -14,4 +17,7 @@ export type budgetListType = Array<{
 export type recordsType = Array<{
   id: number;
   fields: string[];
+  isDelete: boolean;
+  isUpdate: boolean;
+  isChange: boolean;
 }>;

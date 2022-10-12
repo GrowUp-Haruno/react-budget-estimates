@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
 import { PrimaryModal } from "../atoms/Modal";
-import { ChangeButton, CloseButon, DeleteButton } from "../molecules/CustomButton";
+import { ChangeButton, CloseButon } from "../molecules/CustomButton";
+import { DeleteCheckbox } from "../molecules/CustomCheckbox";
 import { DataGrid } from "../molecules/DataGrid";
 
 export const BudgetModal: FC<{
@@ -15,12 +16,10 @@ export const BudgetModal: FC<{
       title="予算設定"
       Body={
         <DataGrid
-          columnNames={["内容", "料金", ""]}
+          columnNames={["削除", "内容", "料金", ""]}
           records={budgetModalRecords}
-          OptionButtons={[
-            { ButtonComponent: ChangeButton, callback: () => {} },
-            { ButtonComponent: DeleteButton, callback: onBudgetDetailDelete },
-          ]}
+          frontCheckbox={{ Component: DeleteCheckbox, callback: onBudgetDetailDelete }}
+          backButton={{ Component: ChangeButton, callback: () => {} }}
         />
       }
       Foot={<CloseButon onClick={onClose} />}

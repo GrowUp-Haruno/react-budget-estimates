@@ -27,7 +27,8 @@ export const useApp: useAppType = () => {
   /** 予算詳細を削除 */
   const onBudgetDetailDelete = (index: number): void => {
     const newBudget = budgets;
-    newBudget[budgetIndex].budgetDetails.splice(index, 1);
+    // newBudget[budgetIndex].budgetDetails.splice(index, 1);
+    newBudget[budgetIndex].budgetDetails[index].isDelete = !newBudget[budgetIndex].budgetDetails[index].isDelete;
     setBudgets([...newBudget]);
   };
 
@@ -47,30 +48,50 @@ export const useApp: useAppType = () => {
   const budgetListRecords: recordsType = budgetlist.map(({ category, subtotal }, i) => ({
     id: i,
     fields: [category, subtotal.toLocaleString("ja-JP")],
+    isDelete: false,
+    isUpdate: false,
+    isChange: false,
   }));
 
   const total = budgetlist.reduce((total, curr) => total + curr.subtotal, 0);
 
-  const budgetModalRecords: recordsType = budgets[budgetIndex].budgetDetails.map(({ name, price }, i) => ({
-    id: i,
-    fields: [name, price.toLocaleString("ja-JP")],
-  }));
+  const budgetModalRecords: recordsType = budgets[budgetIndex].budgetDetails.map(
+    ({ name, price, isChange, isDelete, isUpdate }, i) => ({
+      id: i,
+      fields: [name, price.toLocaleString("ja-JP")],
+      isDelete,
+      isUpdate,
+      isChange,
+    })
+  );
 
   useEffect(() => {
     setBudgets([
       {
         category: "移動費",
         budgetDetails: [
-          { name: "電車賃", price: 10000 },
-          { name: "電車賃2", price: 20000 },
-          { name: "電車賃3", price: 30000 },
-          { name: "電車賃4", price: 40000 },
+          { name: "電車賃", price: 10000, isChange: false, isDelete: false, isUpdate: false },
+          { name: "電車賃2", price: 20000, isChange: false, isDelete: false, isUpdate: false },
+          { name: "電車賃3", price: 30000, isChange: false, isDelete: false, isUpdate: false },
+          { name: "電車賃4", price: 40000, isChange: false, isDelete: false, isUpdate: false },
         ],
       },
-      { category: "宿泊費", budgetDetails: [{ name: "アパホテル", price: 12000 }] },
-      { category: "食費費", budgetDetails: [{ name: "夢庵", price: 2000 }] },
-      { category: "観光費", budgetDetails: [{ name: "観光船", price: 1000 }] },
-      { category: "お土産代", budgetDetails: [{ name: "お土産代", price: 10000 }] },
+      {
+        category: "宿泊費",
+        budgetDetails: [{ name: "アパホテル", price: 12000, isChange: false, isDelete: false, isUpdate: false }],
+      },
+      {
+        category: "食費費",
+        budgetDetails: [{ name: "夢庵", price: 2000, isChange: false, isDelete: false, isUpdate: false }],
+      },
+      {
+        category: "観光費",
+        budgetDetails: [{ name: "観光船", price: 1000, isChange: false, isDelete: false, isUpdate: false }],
+      },
+      {
+        category: "お土産代",
+        budgetDetails: [{ name: "お土産代", price: 10000, isChange: false, isDelete: false, isUpdate: false }],
+      },
     ]);
   }, []);
 

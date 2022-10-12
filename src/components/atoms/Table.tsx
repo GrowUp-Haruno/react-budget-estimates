@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { ButtonProps, HStack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { recordsType } from "../../Pages/App.model";
 
 export const PrimaryTable: FC<{
@@ -8,7 +8,7 @@ export const PrimaryTable: FC<{
 }> = ({ Head, Body }) => {
   return (
     <TableContainer>
-      <Table size={"lg"}>
+      <Table size={["sm", "sm", "md"]}>
         <Thead>{Head}</Thead>
         <Tbody>{Body}</Tbody>
       </Table>
@@ -30,34 +30,44 @@ export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames })
 
 export const PrimaryTableBody: FC<{
   records: recordsType;
-  OptionButtons?: Array<{
-    ButtonComponent: FC<{ onClick?: ButtonProps["onClick"] }>;
+  frontCheckbox?: {
+    Component: FC<{ onChange?: () => void }>;
     callback: (arg: number) => void;
-  }>;
-}> = ({ records, OptionButtons }) => {
+  };
+  backButton?: {
+    Component: FC<{ onClick?: () => void }>;
+    callback: (arg: number) => void;
+  };
+}> = ({ records, backButton, frontCheckbox }) => {
   return (
     <>
       {records.map((record, recordIndex) => (
         <Tr key={record.id}>
-          {record.fields.map((field, i) => (
-            <Td key={i}>{field}</Td>
-          ))}
-          <Td>
-            <HStack justify="end">
-              {OptionButtons?.map(({ ButtonComponent, callback }, i) => {
-                return (
-                  <ButtonComponent
-                    key={i}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      callback(recordIndex);
+          {frontCheckbox === undefined ? (
+            <></>
+          ) : (
+            <Td>
+              {
+                <Box w="100%">
+                  <frontCheckbox.Component
+                    onChange={() => {
+                      frontCheckbox.callback(recordIndex);
                     }}
                   />
-                );
-              })}
-            </HStack>
-          </Td>
+                </Box>
+              }
+            </Td>
+          )}
+          {record.fields.map((field, i) => (
+            <Td key={i}>
+              <Text as={record.isDelete ? "s" : undefined}>{field}</Text>
+            </Td>
+          ))}
+          {backButton === undefined ? (
+            <></>
+          ) : (
+            <Td isNumeric>{<backButton.Component onClick={() => backButton.callback(recordIndex)} />}</Td>
+          )}
         </Tr>
       ))}
     </>

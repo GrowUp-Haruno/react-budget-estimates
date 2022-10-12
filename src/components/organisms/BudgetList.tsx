@@ -13,12 +13,7 @@ export const BudgetList: FC<{
       <DataGrid
         columnNames={["カテゴリ", "料金", ""]}
         records={records}
-        OptionButtons={[
-          {
-            ButtonComponent: DetailButton,
-            callback: onBudgetModalOpen,
-          },
-        ]}
+        backButton={{ Component: DetailButton, callback: onBudgetModalOpen }}
       />
     </Container>
   );
