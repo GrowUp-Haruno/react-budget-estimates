@@ -16,9 +16,7 @@ export const PrimaryTable: FC<{
   );
 };
 
-export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({
-  columnNames,
-}) => {
+export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames }) => {
   return (
     <Tr>
       {columnNames.map((columnName, i) => (
@@ -39,7 +37,7 @@ export const PrimaryTableBody: FC<{
 }> = ({ records, OptionButtons }) => {
   return (
     <>
-      {records.map((record, i) => (
+      {records.map((record, recordIndex) => (
         <Tr key={record.id}>
           {record.fields.map((field, i) => (
             <Td key={i}>{field}</Td>
@@ -47,7 +45,7 @@ export const PrimaryTableBody: FC<{
           <Td>
             <HStack justify="end">
               {OptionButtons?.map(({ ButtonComponent, callback }, i) => {
-                return <ButtonComponent key={i} onClick={() => callback(i)} />;
+                return <ButtonComponent key={i} onClick={() => callback(recordIndex)} />;
               })}
             </HStack>
           </Td>
