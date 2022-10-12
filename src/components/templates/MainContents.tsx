@@ -11,7 +11,7 @@ export const MainContents: FC<AppType> = ({
   onBudgetModalOpen,
   total,
   budgetListRecords,
-  BudgetModalRecords,
+  budgetModalRecords,
   onBudgetDetailDelete,
 }) => {
   return (
@@ -21,7 +21,7 @@ export const MainContents: FC<AppType> = ({
       <BudgetModal
         isOpen={isOpen}
         onClose={onClose}
-        BudgetModalRecords={BudgetModalRecords}
+        budgetModalRecords={budgetModalRecords}
         onBudgetDetailDelete={onBudgetDetailDelete}
       />
     </MainLayout>

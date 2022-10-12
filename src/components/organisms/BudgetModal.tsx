@@ -8,15 +8,15 @@ export const BudgetModal: FC<{
   isOpen: boolean;
   onClose: () => void;
   onBudgetDetailDelete: (index: number) => void;
-  BudgetModalRecords: recordsType;
-}> = ({ isOpen, onClose, onBudgetDetailDelete, BudgetModalRecords }) => {
+  budgetModalRecords: recordsType;
+}> = ({ isOpen, onClose, onBudgetDetailDelete, budgetModalRecords }) => {
   return (
     <PrimaryModal
       title="予算設定"
       Body={
         <DataGrid
           columnNames={["内容", "料金", ""]}
-          records={BudgetModalRecords}
+          records={budgetModalRecords}
           OptionButtons={[
             { ButtonComponent: ChangeButton, callback: () => {} },
             { ButtonComponent: DeleteButton, callback: onBudgetDetailDelete },

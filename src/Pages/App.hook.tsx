@@ -9,7 +9,7 @@ export type AppType = {
   onBudgetDetailDelete: (index: number) => void;
   total: number;
   budgetListRecords: recordsType;
-  BudgetModalRecords: recordsType;
+  budgetModalRecords: recordsType;
 };
 
 type useAppType = () => AppType;
@@ -51,7 +51,7 @@ export const useApp: useAppType = () => {
 
   const total = budgetlist.reduce((total, curr) => total + curr.subtotal, 0);
 
-  const BudgetModalRecords: recordsType = budgets[budgetIndex].budgetDetails.map(({ name, price }, i) => ({
+  const budgetModalRecords: recordsType = budgets[budgetIndex].budgetDetails.map(({ name, price }, i) => ({
     id: i,
     fields: [name, price.toLocaleString("ja-JP")],
   }));
@@ -81,6 +81,6 @@ export const useApp: useAppType = () => {
     onBudgetDetailDelete,
     total,
     budgetListRecords,
-    BudgetModalRecords,
+    budgetModalRecords,
   };
 };
