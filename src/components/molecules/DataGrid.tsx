@@ -12,6 +12,7 @@ export const DataGrid: FC<{
     callback: (arg: number) => void;
   }>;
 }> = ({ columnNames, records, OptionButtons }) => {
+  if (records.length === 0) return <></>;
   return (
     <PrimaryTable
       Head={<PrimaryTableHead columnNames={columnNames} />}
