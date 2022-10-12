@@ -1,8 +1,8 @@
 import { Container } from "@chakra-ui/react";
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
-import { PrimaryTable, PrimaryTableBody, PrimaryTableHead } from "../atoms/Table";
 import { DetailButton } from "../molecules/Button";
+import { DataGrid } from "../molecules/DataGrid";
 
 export const BudgetList: FC<{
   records: recordsType;
@@ -10,19 +10,15 @@ export const BudgetList: FC<{
 }> = ({ records, onBadgetModalOpen }) => {
   return (
     <Container>
-      <PrimaryTable
-        Head={<PrimaryTableHead columnNames={["カテゴリ", "料金", ""]} />}
-        Body={
-          <PrimaryTableBody
-            records={records}
-            OptionButtons={[
-              {
-                ButtonComponent: DetailButton,
-                callback: onBadgetModalOpen,
-              },
-            ]}
-          />
-        }
+      <DataGrid
+        columnNames={["カテゴリ", "料金", ""]}
+        records={records}
+        OptionButtons={[
+          {
+            ButtonComponent: DetailButton,
+            callback: onBadgetModalOpen,
+          },
+        ]}
       />
     </Container>
   );
