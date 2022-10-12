@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
-import { Table, TableContainer, Tbody, Th, Thead, Tr } from "@chakra-ui/react";
+import { HStack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { recordsType } from "../../Pages/App.model";
 
 export const PrimaryTable: FC<{
   Head: ReactNode;
@@ -26,5 +27,32 @@ export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({
         </Th>
       ))}
     </Tr>
+  );
+};
+
+export const PrimaryTableBody: FC<{
+  records: recordsType;
+  OptionButtons?: Array<{
+    ButtonComponent: FC<{ onClick?: () => void }>;
+    callback: (arg: number) => void;
+  }>;
+}> = ({ records, OptionButtons }) => {
+  return (
+    <>
+      {records.map((record, i) => (
+        <Tr key={record.id}>
+          {record.fields.map((field, i) => (
+            <Td key={i}>{field}</Td>
+          ))}
+          <Td>
+            <HStack justify="end">
+              {OptionButtons?.map(({ ButtonComponent, callback }, i) => {
+                return <ButtonComponent key={i} onClick={() => callback(i)} />;
+              })}
+            </HStack>
+          </Td>
+        </Tr>
+      ))}
+    </>
   );
 };
