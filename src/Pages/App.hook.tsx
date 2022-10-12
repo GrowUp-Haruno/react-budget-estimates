@@ -5,8 +5,8 @@ import { budgetListType, budgetType, recordsType } from "./App.model";
 export type AppType = {
   isOpen: boolean;
   onClose: () => void;
-  onBadgetModalOpen: (index: number) => void;
-  onBadgetDetailDelete: (index: number) => void;
+  onBudgetModalOpen: (index: number) => void;
+  onBudgetDetailDelete: (index: number) => void;
   total: number;
   budgetListRecords: recordsType;
   BudgetModalRecords: recordsType;
@@ -19,17 +19,16 @@ export const useApp: useAppType = () => {
   const [budgetIndex, setBudgetIndex] = useState<number>(0);
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const onBadgetModalOpen = (index: number): void => {
+  const onBudgetModalOpen = (index: number): void => {
     setBudgetIndex(index);
     onOpen();
   };
 
   /** 予算詳細を削除 */
-  const onBadgetDetailDelete = (index: number): void => {
-    setBudgets((prev) => {
-      prev[budgetIndex].budgetDetails.splice(index, 1);
-      return [...prev];
-    });
+  const onBudgetDetailDelete = (index: number): void => {
+    const newBudget = budgets;
+    newBudget[budgetIndex].budgetDetails.splice(index, 1);
+    setBudgets([...newBudget]);
   };
 
   const budgetlist: budgetListType = budgets.map((budget) =>
@@ -59,7 +58,15 @@ export const useApp: useAppType = () => {
 
   useEffect(() => {
     setBudgets([
-      { category: "移動費", budgetDetails: [{ name: "電車賃", price: 10000 }] },
+      {
+        category: "移動費",
+        budgetDetails: [
+          { name: "電車賃", price: 10000 },
+          { name: "電車賃2", price: 20000 },
+          { name: "電車賃3", price: 30000 },
+          { name: "電車賃4", price: 40000 },
+        ],
+      },
       { category: "宿泊費", budgetDetails: [{ name: "アパホテル", price: 12000 }] },
       { category: "食費費", budgetDetails: [{ name: "夢庵", price: 2000 }] },
       { category: "観光費", budgetDetails: [{ name: "観光船", price: 1000 }] },
@@ -70,8 +77,8 @@ export const useApp: useAppType = () => {
   return {
     isOpen,
     onClose,
-    onBadgetModalOpen,
-    onBadgetDetailDelete,
+    onBudgetModalOpen,
+    onBudgetDetailDelete,
     total,
     budgetListRecords,
     BudgetModalRecords,

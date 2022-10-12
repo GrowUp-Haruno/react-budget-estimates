@@ -7,9 +7,9 @@ import { DataGrid } from "../molecules/DataGrid";
 export const BudgetModal: FC<{
   isOpen: boolean;
   onClose: () => void;
-  onBadgetDetailDelete: (index: number) => void;
+  onBudgetDetailDelete: (index: number) => void;
   BudgetModalRecords: recordsType;
-}> = ({ isOpen, onClose, onBadgetDetailDelete, BudgetModalRecords }) => {
+}> = ({ isOpen, onClose, onBudgetDetailDelete, BudgetModalRecords }) => {
   return (
     <PrimaryModal
       title="予算設定"
@@ -19,7 +19,7 @@ export const BudgetModal: FC<{
           records={BudgetModalRecords}
           OptionButtons={[
             { ButtonComponent: ChangeButton, callback: () => {} },
-            { ButtonComponent: DeleteButton, callback: onBadgetDetailDelete },
+            { ButtonComponent: DeleteButton, callback: onBudgetDetailDelete },
           ]}
         />
       }

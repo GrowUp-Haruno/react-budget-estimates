@@ -6,8 +6,8 @@ import { DataGrid } from "../molecules/DataGrid";
 
 export const BudgetList: FC<{
   records: recordsType;
-  onBadgetModalOpen: (index: number) => void;
-}> = ({ records, onBadgetModalOpen }) => {
+  onBudgetModalOpen: (index: number) => void;
+}> = ({ records, onBudgetModalOpen }) => {
   return (
     <Container>
       <DataGrid
@@ -16,7 +16,7 @@ export const BudgetList: FC<{
         OptionButtons={[
           {
             ButtonComponent: DetailButton,
-            callback: onBadgetModalOpen,
+            callback: onBudgetModalOpen,
           },
         ]}
       />

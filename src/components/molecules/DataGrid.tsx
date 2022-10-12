@@ -1,3 +1,4 @@
+import { ButtonProps } from "@chakra-ui/react";
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
 import { PrimaryTable, PrimaryTableBody, PrimaryTableHead } from "../atoms/Table";
@@ -7,7 +8,7 @@ export const DataGrid: FC<{
   records: recordsType;
   OptionButtons?: Array<{
     ButtonComponent: FC<{
-      onClick?: (() => void) | undefined;
+      onClick?: ButtonProps["onClick"];
     }>;
     callback: (arg: number) => void;
   }>;

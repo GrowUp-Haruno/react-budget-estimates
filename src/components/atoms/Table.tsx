@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { HStack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { ButtonProps, HStack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { recordsType } from "../../Pages/App.model";
 
 export const PrimaryTable: FC<{
@@ -31,7 +31,7 @@ export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames })
 export const PrimaryTableBody: FC<{
   records: recordsType;
   OptionButtons?: Array<{
-    ButtonComponent: FC<{ onClick?: () => void }>;
+    ButtonComponent: FC<{ onClick?: ButtonProps["onClick"] }>;
     callback: (arg: number) => void;
   }>;
 }> = ({ records, OptionButtons }) => {
@@ -45,7 +45,16 @@ export const PrimaryTableBody: FC<{
           <Td>
             <HStack justify="end">
               {OptionButtons?.map(({ ButtonComponent, callback }, i) => {
-                return <ButtonComponent key={i} onClick={() => callback(recordIndex)} />;
+                return (
+                  <ButtonComponent
+                    key={i}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      callback(recordIndex);
+                    }}
+                  />
+                );
               })}
             </HStack>
           </Td>

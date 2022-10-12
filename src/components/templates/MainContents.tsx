@@ -8,21 +8,21 @@ import { MainLayout } from "../atoms/Layout";
 export const MainContents: FC<AppType> = ({
   isOpen,
   onClose,
-  onBadgetModalOpen,
+  onBudgetModalOpen,
   total,
   budgetListRecords,
   BudgetModalRecords,
-  onBadgetDetailDelete,
+  onBudgetDetailDelete,
 }) => {
   return (
     <MainLayout>
-      <BudgetList records={budgetListRecords} onBadgetModalOpen={onBadgetModalOpen} />
+      <BudgetList records={budgetListRecords} onBudgetModalOpen={onBudgetModalOpen} />
       <BudgetTotal total={total} />
       <BudgetModal
         isOpen={isOpen}
         onClose={onClose}
         BudgetModalRecords={BudgetModalRecords}
-        onBadgetDetailDelete={onBadgetDetailDelete}
+        onBudgetDetailDelete={onBudgetDetailDelete}
       />
     </MainLayout>
   );
