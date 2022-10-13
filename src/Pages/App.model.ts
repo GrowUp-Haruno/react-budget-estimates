@@ -3,9 +3,6 @@ export type budgetType = {
   budgetDetails: Array<{
     name: string;
     price: number;
-    isDelete: boolean;
-    isUpdate: boolean;
-    isChange: boolean;
   }>;
 };
 
