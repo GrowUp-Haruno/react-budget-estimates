@@ -18,5 +18,3 @@ export const PrimaryButton: FC<CustomButtonProps> = (props) => {
 export const SecondaryButton: FC<CustomButtonProps> = (props) => {
   return <BaseButto {...props} colorScheme="red" />;
 };
-
-

@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { HStack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { recordsType } from "../../Pages/App.model";
 
 export const PrimaryTable: FC<{
@@ -8,7 +8,7 @@ export const PrimaryTable: FC<{
 }> = ({ Head, Body }) => {
   return (
     <TableContainer>
-      <Table size={"lg"}>
+      <Table size={["sm", "sm", "md"]} >
         <Thead>{Head}</Thead>
         <Tbody>{Body}</Tbody>
       </Table>
@@ -18,7 +18,7 @@ export const PrimaryTable: FC<{
 
 export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames }) => {
   return (
-    <Tr>
+    <Tr backgroundColor='green.100'>
       {columnNames.map((columnName, i) => (
         <Th key={columnName} isNumeric={columnNames.length - 1 === i}>
           {columnName}
@@ -30,25 +30,42 @@ export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames })
 
 export const PrimaryTableBody: FC<{
   records: recordsType;
-  OptionButtons?: Array<{
-    ButtonComponent: FC<{ onClick?: () => void }>;
+  frontCheckbox?: {
+    Component: FC<{ onChange?: () => void }>;
     callback: (arg: number) => void;
-  }>;
-}> = ({ records, OptionButtons }) => {
+  };
+  backButton?: {
+    Component: FC<{ onClick?: () => void }>;
+    callback: (arg: number) => void;
+  };
+}> = ({ records, backButton, frontCheckbox }) => {
   return (
     <>
       {records.map((record, recordIndex) => (
         <Tr key={record.id}>
+          {frontCheckbox === undefined ? (
+            <></>
+          ) : (
+            <Td>
+              <frontCheckbox.Component
+                onChange={() => {
+                  frontCheckbox.callback(recordIndex);
+                }}
+              />
+            </Td>
+          )}
           {record.fields.map((field, i) => (
-            <Td key={i}>{field}</Td>
+            <Td key={i}>
+              <Text as={record.isDelete ? "s" : undefined}>{field}</Text>
+            </Td>
           ))}
-          <Td>
-            <HStack justify="end">
-              {OptionButtons?.map(({ ButtonComponent, callback }, i) => {
-                return <ButtonComponent key={i} onClick={() => callback(recordIndex)} />;
-              })}
-            </HStack>
-          </Td>
+          {backButton === undefined ? (
+            <></>
+          ) : (
+            <Td isNumeric>
+              <backButton.Component onClick={() => backButton.callback(recordIndex)} />
+            </Td>
+          )}
         </Tr>
       ))}
     </>

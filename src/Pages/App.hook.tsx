@@ -5,31 +5,44 @@ import { budgetListType, budgetType, recordsType } from "./App.model";
 export type AppType = {
   isOpen: boolean;
   onClose: () => void;
-  onBadgetModalOpen: (index: number) => void;
-  onBadgetDetailDelete: (index: number) => void;
+  onBudgetModalOpen: (index: number) => void;
+  onBudgetDetailDelete: (index: number) => void;
+  onBudgetDetailAdd: () => void;
   total: number;
   budgetListRecords: recordsType;
-  BudgetModalRecords: recordsType;
+  budgetModalRecords: recordsType;
 };
 
 type useAppType = () => AppType;
 
 export const useApp: useAppType = () => {
   const [budgets, setBudgets] = useState<budgetType[]>([{ category: "", budgetDetails: [] }]);
-  const [budgetIndex, setBudgetIndex] = useState<number>(0);
+  const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
+
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const onBadgetModalOpen = (index: number): void => {
-    setBudgetIndex(index);
+  const onBudgetModalOpen = (index: number): void => {
+    const newRecords: recordsType = budgets[index].budgetDetails.map(({ name, price }, i) => ({
+      id: i,
+      fields: [name, price.toLocaleString("ja-JP")],
+      isDelete: false,
+    }));
+    setBudgetModalRecords([...newRecords]);
     onOpen();
   };
 
-  /** 予算詳細を削除 */
-  const onBadgetDetailDelete = (index: number): void => {
-    setBudgets((prev) => {
-      prev[budgetIndex].budgetDetails.splice(index, 1);
-      return [...prev];
-    });
+  /** 予算詳細を仮削除 */
+  const onBudgetDetailDelete = (index: number): void => {
+    const newRecords: recordsType = budgetModalRecords;
+    newRecords[index].isDelete = !newRecords[index].isDelete;
+    setBudgetModalRecords([...newRecords]);
+  };
+
+  /** 予算詳細を仮追加 */
+  const onBudgetDetailAdd = (): void => {
+    const newRecords: recordsType = budgetModalRecords;
+    newRecords.push({ id: newRecords.length, fields: ["", "0"], isDelete: false });
+    setBudgetModalRecords([...newRecords]);
   };
 
   const budgetlist: budgetListType = budgets.map((budget) =>
@@ -48,18 +61,24 @@ export const useApp: useAppType = () => {
   const budgetListRecords: recordsType = budgetlist.map(({ category, subtotal }, i) => ({
     id: i,
     fields: [category, subtotal.toLocaleString("ja-JP")],
+    isDelete: false,
+    isUpdate: false,
+    isChange: false,
   }));
 
   const total = budgetlist.reduce((total, curr) => total + curr.subtotal, 0);
 
-  const BudgetModalRecords: recordsType = budgets[budgetIndex].budgetDetails.map(({ name, price }, i) => ({
-    id: i,
-    fields: [name, price.toLocaleString("ja-JP")],
-  }));
-
   useEffect(() => {
     setBudgets([
-      { category: "移動費", budgetDetails: [{ name: "電車賃", price: 10000 }] },
+      {
+        category: "移動費",
+        budgetDetails: [
+          { name: "電車賃", price: 10000 },
+          { name: "電車賃2", price: 20000 },
+          { name: "電車賃3", price: 30000 },
+          { name: "電車賃4", price: 40000 },
+        ],
+      },
       { category: "宿泊費", budgetDetails: [{ name: "アパホテル", price: 12000 }] },
       { category: "食費費", budgetDetails: [{ name: "夢庵", price: 2000 }] },
       { category: "観光費", budgetDetails: [{ name: "観光船", price: 1000 }] },
@@ -70,10 +89,11 @@ export const useApp: useAppType = () => {
   return {
     isOpen,
     onClose,
-    onBadgetModalOpen,
-    onBadgetDetailDelete,
+    onBudgetModalOpen,
+    onBudgetDetailDelete,
+    onBudgetDetailAdd,
     total,
     budgetListRecords,
-    BudgetModalRecords,
+    budgetModalRecords,
   };
 };

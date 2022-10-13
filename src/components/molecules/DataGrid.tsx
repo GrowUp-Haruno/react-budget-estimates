@@ -1,3 +1,4 @@
+// import { ButtonProps } from "@chakra-ui/react";
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
 import { PrimaryTable, PrimaryTableBody, PrimaryTableHead } from "../atoms/Table";
@@ -5,17 +6,20 @@ import { PrimaryTable, PrimaryTableBody, PrimaryTableHead } from "../atoms/Table
 export const DataGrid: FC<{
   columnNames: string[];
   records: recordsType;
-  OptionButtons?: Array<{
-    ButtonComponent: FC<{
-      onClick?: (() => void) | undefined;
-    }>;
+  frontCheckbox?: {
+    Component: FC<{ onChange?: () => void }>;
     callback: (arg: number) => void;
-  }>;
-}> = ({ columnNames, records, OptionButtons }) => {
+  };
+  backButton?: {
+    Component: FC<{ onClick?: () => void }>;
+    callback: (arg: number) => void;
+  };
+}> = ({ columnNames, records, backButton, frontCheckbox }) => {
+  if (records.length === 0) return <></>;
   return (
     <PrimaryTable
       Head={<PrimaryTableHead columnNames={columnNames} />}
-      Body={<PrimaryTableBody records={records} OptionButtons={OptionButtons} />}
+      Body={<PrimaryTableBody records={records} backButton={backButton} frontCheckbox={frontCheckbox} />}
     />
   );
 };
