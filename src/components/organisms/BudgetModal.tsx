@@ -11,8 +11,9 @@ export const BudgetModal: FC<{
   onClose: () => void;
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
+  onBudgetDetailChange: (index: number) => void;
   budgetModalRecords: recordsType;
-}> = ({ isOpen, onClose, onBudgetDetailDelete, onBudgetDetailAdd, budgetModalRecords }) => {
+}> = ({ isOpen, onClose, onBudgetDetailDelete, onBudgetDetailAdd, onBudgetDetailChange, budgetModalRecords }) => {
   return (
     <PrimaryModal
       title="予算設定"
@@ -22,7 +23,7 @@ export const BudgetModal: FC<{
             columnNames={["削除", "内容", "料金", ""]}
             records={budgetModalRecords}
             frontCheckbox={{ Component: DeleteCheckbox, callback: onBudgetDetailDelete }}
-            backButton={{ Component: ChangeButton, callback: () => {} }}
+            backButton={{ Component: ChangeButton, callback: onBudgetDetailChange }}
           />
           <AddButton onClick={onBudgetDetailAdd} />
         </VStack>

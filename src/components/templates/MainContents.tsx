@@ -14,6 +14,7 @@ export const MainContents: FC<AppType> = ({
   budgetModalRecords,
   onBudgetDetailDelete,
   onBudgetDetailAdd,
+  onBudgetDetailChange,
 }) => {
   return (
     <MainLayout>
@@ -25,6 +26,7 @@ export const MainContents: FC<AppType> = ({
         budgetModalRecords={budgetModalRecords}
         onBudgetDetailDelete={onBudgetDetailDelete}
         onBudgetDetailAdd={onBudgetDetailAdd}
+        onBudgetDetailChange={onBudgetDetailChange}
       />
     </MainLayout>
   );

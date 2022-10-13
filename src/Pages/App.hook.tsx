@@ -8,6 +8,7 @@ export type AppType = {
   onBudgetModalOpen: (index: number) => void;
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
+  onBudgetDetailChange: (index: number) => void;
   total: number;
   budgetListRecords: recordsType;
   budgetModalRecords: recordsType;
@@ -26,6 +27,7 @@ export const useApp: useAppType = () => {
       id: i,
       fields: [name, price.toLocaleString("ja-JP")],
       isDelete: false,
+      isChange: false,
     }));
     setBudgetModalRecords([...newRecords]);
     onOpen();
@@ -41,10 +43,16 @@ export const useApp: useAppType = () => {
   /** 予算詳細を仮追加 */
   const onBudgetDetailAdd = (): void => {
     const newRecords: recordsType = budgetModalRecords;
-    newRecords.push({ id: newRecords.length, fields: ["", "0"], isDelete: false });
+    newRecords.push({ id: newRecords.length, fields: ["", "0"], isDelete: false, isChange: true });
     setBudgetModalRecords([...newRecords]);
   };
 
+  /** 予算詳細を仮変更 */
+  const onBudgetDetailChange = (index: number): void => {
+    const newRecords: recordsType = budgetModalRecords;
+    newRecords[index].isChange = !newRecords[index].isChange;
+    setBudgetModalRecords([...newRecords]);
+  };
   const budgetlist: budgetListType = budgets.map((budget) =>
     budget.budgetDetails.reduce(
       (newObj: { category: string; subtotal: number }, curr) => ({
@@ -92,6 +100,7 @@ export const useApp: useAppType = () => {
     onBudgetModalOpen,
     onBudgetDetailDelete,
     onBudgetDetailAdd,
+    onBudgetDetailChange,
     total,
     budgetListRecords,
     budgetModalRecords,
