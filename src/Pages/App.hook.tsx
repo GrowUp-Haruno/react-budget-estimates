@@ -7,6 +7,7 @@ export type AppType = {
   onClose: () => void;
   onBudgetModalOpen: (index: number) => void;
   onBudgetDetailDelete: (index: number) => void;
+  onBudgetDetailAdd: () => void;
   total: number;
   budgetListRecords: recordsType;
   budgetModalRecords: recordsType;
@@ -25,8 +26,6 @@ export const useApp: useAppType = () => {
       id: i,
       fields: [name, price.toLocaleString("ja-JP")],
       isDelete: false,
-      isUpdate: false,
-      isChange: false,
     }));
     setBudgetModalRecords([...newRecords]);
     onOpen();
@@ -36,6 +35,13 @@ export const useApp: useAppType = () => {
   const onBudgetDetailDelete = (index: number): void => {
     const newRecords: recordsType = budgetModalRecords;
     newRecords[index].isDelete = !newRecords[index].isDelete;
+    setBudgetModalRecords([...newRecords]);
+  };
+
+  /** 予算詳細を仮追加 */
+  const onBudgetDetailAdd = (): void => {
+    const newRecords: recordsType = budgetModalRecords;
+    newRecords.push({ id: newRecords.length, fields: ["", "0"], isDelete: false });
     setBudgetModalRecords([...newRecords]);
   };
 
@@ -85,6 +91,7 @@ export const useApp: useAppType = () => {
     onClose,
     onBudgetModalOpen,
     onBudgetDetailDelete,
+    onBudgetDetailAdd,
     total,
     budgetListRecords,
     budgetModalRecords,
