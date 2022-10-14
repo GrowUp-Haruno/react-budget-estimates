@@ -56,7 +56,7 @@ export const useApp: useAppType = () => {
     setBudgetModalRecords([...newRecords]);
   }, [budgetModalRecords]);
 
-  /** 数値変更 */
+  /** 数値変更関数 */
   const onNumberInputChange = useCallback(
     (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>): void => {
       const newRecords: recordsType = budgetModalRecords.slice();
@@ -71,7 +71,7 @@ export const useApp: useAppType = () => {
     [budgetModalRecords]
   );
 
-  /** 文字変更 */
+  /** 文字変更関数 */
   const onStringInputChange = useCallback(
     (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>): void => {
       const newRecords: recordsType = budgetModalRecords.slice();
