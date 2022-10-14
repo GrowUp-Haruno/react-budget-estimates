@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import { Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { recordsType } from "../../Pages/App.model";
 import { BaseInput } from "./Input";
+import { CustomButtonProps } from "../molecules/CustomButton";
 
 export const PrimaryTable: FC<{
   Head: ReactNode;
@@ -36,11 +37,11 @@ export const PrimaryTableBody: FC<{
     callback: (arg: number) => void;
   };
   backButton?: {
-    Component: FC<{ onClick?: () => void }>;
+    Component: FC<CustomButtonProps>;
     callback: (arg: number) => void;
   };
-  onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-  onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onNumberInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onStringInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({ records, backButton, frontCheckbox, onNumberInputChange, onStringInputChange }) => {
   return (
     <>
@@ -58,35 +59,39 @@ export const PrimaryTableBody: FC<{
             </Td>
           )}
           {record.fields.map((field, fieldIndex) => {
-            const StringField =
-              typeof field === "number" ? (
-                <Text as={record.isDelete ? "s" : undefined}>{field.toLocaleString("ja-JP")}</Text>
-              ) : (
-                <Text as={record.isDelete ? "s" : undefined}>{field}</Text>
-              );
-            const InputField =
-              typeof field === "number" ? (
-                <BaseInput
-                  onChange={(e) => {
-                    onNumberInputChange(recordIndex, fieldIndex, e);
-                  }}
-                  value={field.toLocaleString("ja-JP")}
-                />
-              ) : (
-                <BaseInput
-                  onChange={(e) => {
-                    onStringInputChange(recordIndex, fieldIndex, e);
-                  }}
-                  value={field}
-                />
-              );
-            return <Td key={fieldIndex}>{record.isChange ? InputField : StringField}</Td>;
+            const SwitchField = (() => {
+              if (typeof field === "number" && onNumberInputChange === undefined)
+                return <Text>{field.toLocaleString("ja-JP")}</Text>;
+              else if (typeof field === "number" && onNumberInputChange !== undefined)
+                return (
+                  <BaseInput
+                    onChange={(e) => {
+                      onNumberInputChange(recordIndex, fieldIndex, e);
+                    }}
+                    value={field.toLocaleString("ja-JP")}
+                    textAlign="right"
+                  />
+                );
+              else if (typeof field === "string" && onStringInputChange === undefined) return <Text>{field}</Text>;
+              else if (typeof field === "string" && onStringInputChange !== undefined)
+                return (
+                  <BaseInput
+                    onChange={(e) => {
+                      onStringInputChange(recordIndex, fieldIndex, e);
+                    }}
+                    value={field}
+                  />
+                );
+              return <></>;
+            })();
+
+            return <Td key={fieldIndex}>{SwitchField}</Td>;
           })}
           {backButton === undefined ? (
             <></>
           ) : (
             <Td isNumeric>
-              <backButton.Component onClick={() => backButton.callback(recordIndex)} />
+              <backButton.Component onClick={() => backButton.callback(recordIndex)} w="full"/>
             </Td>
           )}
         </Tr>

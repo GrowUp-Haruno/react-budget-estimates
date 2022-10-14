@@ -15,5 +15,4 @@ export type recordsType = Array<{
   id: number;
   fields: Array<string | number>;
   isDelete: boolean;
-  isChange: boolean;
 }>;

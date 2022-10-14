@@ -11,7 +11,6 @@ export type AppType = {
   onBudgetModalOpen: (index: number) => void;
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
-  onBudgetDetailChange: (index: number) => void;
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   total: number;
@@ -53,21 +52,9 @@ export const useApp: useAppType = () => {
   /** 予算詳細を仮追加 */
   const onBudgetDetailAdd = useCallback((): void => {
     const newRecords: recordsType = budgetModalRecords.slice();
-    newRecords.push({ id: newRecords.length, fields: ["", 0], isDelete: false, isChange: true });
+    newRecords.push({ id: newRecords.length, fields: ["", 0], isDelete: false });
     setBudgetModalRecords([...newRecords]);
   }, [budgetModalRecords]);
-
-  /** 予算詳細を仮変更 */
-  const onBudgetDetailChange = useCallback(
-    (index: number): void => {
-      console.log("call");
-
-      const newRecords: recordsType = budgetModalRecords.slice();
-      newRecords[index].isChange = !newRecords[index].isChange;
-      setBudgetModalRecords([...newRecords]);
-    },
-    [budgetModalRecords]
-  );
 
   /** 数値変更 */
   const onNumberInputChange = useCallback(
@@ -154,7 +141,6 @@ export const useApp: useAppType = () => {
     onBudgetModalOpen,
     onBudgetDetailDelete,
     onBudgetDetailAdd,
-    onBudgetDetailChange,
     onNumberInputChange,
     onStringInputChange,
     total,
