@@ -15,6 +15,8 @@ export const MainContents: FC<AppType> = ({
   onBudgetDetailDelete,
   onBudgetDetailAdd,
   onBudgetDetailChange,
+  onNumberInputChange,
+  onStringInputChange
 }) => {
   return (
     <MainLayout>
@@ -27,6 +29,8 @@ export const MainContents: FC<AppType> = ({
         onBudgetDetailDelete={onBudgetDetailDelete}
         onBudgetDetailAdd={onBudgetDetailAdd}
         onBudgetDetailChange={onBudgetDetailChange}
+        onNumberInputChange={onNumberInputChange}
+        onStringInputChange={onStringInputChange}
       />
     </MainLayout>
   );

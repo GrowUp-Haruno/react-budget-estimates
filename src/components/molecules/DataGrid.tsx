@@ -14,12 +14,29 @@ export const DataGrid: FC<{
     Component: FC<{ onClick?: () => void }>;
     callback: (arg: number) => void;
   };
-}> = ({ columnNames, records, backButton, frontCheckbox }) => {
+  onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+}> = ({
+  columnNames,
+  records,
+  backButton,
+  frontCheckbox,
+  onNumberInputChange,
+  onStringInputChange,
+}) => {
   if (records.length === 0) return <></>;
   return (
     <PrimaryTable
       Head={<PrimaryTableHead columnNames={columnNames} />}
-      Body={<PrimaryTableBody records={records} backButton={backButton} frontCheckbox={frontCheckbox} />}
+      Body={
+        <PrimaryTableBody
+          records={records}
+          backButton={backButton}
+          frontCheckbox={frontCheckbox}
+          onNumberInputChange={onNumberInputChange}
+          onStringInputChange={onStringInputChange}
+        />
+      }
     />
   );
 };

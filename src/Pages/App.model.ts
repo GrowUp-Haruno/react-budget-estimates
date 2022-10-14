@@ -13,7 +13,7 @@ export type budgetListType = Array<{
 
 export type recordsType = Array<{
   id: number;
-  fields: string[];
+  fields: Array<string | number>;
   isDelete: boolean;
   isChange: boolean;
 }>;

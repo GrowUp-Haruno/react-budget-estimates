@@ -12,8 +12,19 @@ export const BudgetModal: FC<{
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
   onBudgetDetailChange: (index: number) => void;
+  onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   budgetModalRecords: recordsType;
-}> = ({ isOpen, onClose, onBudgetDetailDelete, onBudgetDetailAdd, onBudgetDetailChange, budgetModalRecords }) => {
+}> = ({
+  isOpen,
+  onClose,
+  onBudgetDetailDelete,
+  onBudgetDetailAdd,
+  onBudgetDetailChange,
+  onNumberInputChange,
+  onStringInputChange,
+  budgetModalRecords,
+}) => {
   return (
     <PrimaryModal
       title="予算設定"
@@ -24,6 +35,8 @@ export const BudgetModal: FC<{
             records={budgetModalRecords}
             frontCheckbox={{ Component: DeleteCheckbox, callback: onBudgetDetailDelete }}
             backButton={{ Component: ChangeButton, callback: onBudgetDetailChange }}
+            onNumberInputChange={onNumberInputChange}
+            onStringInputChange={onStringInputChange}
           />
           <AddButton onClick={onBudgetDetailAdd} />
         </VStack>
