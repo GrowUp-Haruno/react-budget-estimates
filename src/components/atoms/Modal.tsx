@@ -17,13 +17,7 @@ type PrimaryModalProps = {
   Foot?: ReactNode;
 };
 
-export const PrimaryModal: FC<PrimaryModalProps> = ({
-  isOpen,
-  onClose,
-  title,
-  Body,
-  Foot,
-}) => {
+export const PrimaryModal: FC<PrimaryModalProps> = ({ isOpen, onClose, title, Body, Foot }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={["sm", "md", "lg"]}>
       <ModalOverlay />

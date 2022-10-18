@@ -1,8 +1,8 @@
-import { VStack } from "@chakra-ui/react";
+import {  VStack } from "@chakra-ui/react";
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
 import { PrimaryModal } from "../atoms/Modal";
-import { AddButton, CloseButon } from "../molecules/CustomButton";
+import { AddButton,  ClosePopButton } from "../molecules/CustomButton";
 import { DeleteCheckbox } from "../molecules/CustomCheckbox";
 import { DataGrid } from "../molecules/DataGrid";
 
@@ -36,9 +36,10 @@ export const BudgetModal: FC<{
             onStringInputChange={onStringInputChange}
           />
           <AddButton onClick={onBudgetDetailAdd} w="full" />
+          <ClosePopButton noCallback={() => {}} yesCallback={() => {}}/>
         </VStack>
       }
-      Foot={<CloseButon onClick={onClose} />}
+      // Foot={<CloseButon onClick={onClose} />}
       isOpen={isOpen}
       onClose={onClose}
     />
