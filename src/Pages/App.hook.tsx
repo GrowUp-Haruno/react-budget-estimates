@@ -10,8 +10,8 @@ export type AppType = {
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
   onModalClose: () => void;
-  yesCallback: () => void;
-  noCallback: () => void;
+  onCloseYes: () => void;
+  onCloseNo: () => void;
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   total: number;
@@ -19,6 +19,7 @@ export type AppType = {
   budgetModalRecords: recordsType;
   budgetModalDisclosure: UseDisclosureReturn;
   closePopButtonDisclosure: UseDisclosureReturn;
+  savePopButtonDisclosure: UseDisclosureReturn;
   isUpdate: boolean;
 };
 
@@ -31,6 +32,7 @@ export const useApp: useAppType = () => {
 
   const budgetModalDisclosure = useDisclosure();
   const closePopButtonDisclosure = useDisclosure();
+  const savePopButtonDisclosure = useDisclosure();
 
   /** 予算詳細モーダルの表示処理 */
   const onBudgetModalOpen = useCallback(
@@ -50,25 +52,34 @@ export const useApp: useAppType = () => {
   /** 予算詳細を仮削除 */
   const onBudgetDetailDelete = useCallback(
     (index: number): void => {
+      // popButton表示中は処理を無効化
+      if (closePopButtonDisclosure.isOpen) return;
+      if (savePopButtonDisclosure.isOpen) return;
       const newRecords: recordsType = budgetModalRecords.slice();
       newRecords[index].isDelete = !newRecords[index].isDelete;
       setBudgetModalRecords([...newRecords]);
       if (!isUpdate) setIsUpdate(true);
     },
-    [budgetModalRecords]
+    [budgetModalRecords, closePopButtonDisclosure.isOpen, savePopButtonDisclosure.isOpen]
   );
 
   /** 予算詳細を仮追加 */
   const onBudgetDetailAdd = useCallback((): void => {
+    // popButton表示中は処理を無効化
+    if (closePopButtonDisclosure.isOpen) return;
+    if (savePopButtonDisclosure.isOpen) return;
     const newRecords: recordsType = budgetModalRecords.slice();
     newRecords.push({ id: newRecords.length, fields: ["", 0], isDelete: false });
     setBudgetModalRecords([...newRecords]);
     if (!isUpdate) setIsUpdate(true);
-  }, [budgetModalRecords]);
+  }, [budgetModalRecords, closePopButtonDisclosure.isOpen, savePopButtonDisclosure.isOpen]);
 
   /** 数値変更関数 */
   const onNumberInputChange = useCallback(
     (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>): void => {
+      // popButton表示中は処理を無効化
+      if (closePopButtonDisclosure.isOpen) return;
+      if (savePopButtonDisclosure.isOpen) return;
       const newRecords: recordsType = budgetModalRecords.slice();
       const targetValue = e.target.value.replace(/,/g, "");
       // バリデーション
@@ -79,12 +90,15 @@ export const useApp: useAppType = () => {
       setBudgetModalRecords([...newRecords]);
       if (!isUpdate) setIsUpdate(true);
     },
-    [budgetModalRecords]
+    [budgetModalRecords, closePopButtonDisclosure.isOpen, savePopButtonDisclosure.isOpen]
   );
 
   /** 文字変更関数 */
   const onStringInputChange = useCallback(
     (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>): void => {
+      // popButton表示中は処理を無効化
+      if (closePopButtonDisclosure.isOpen) return;
+      if (savePopButtonDisclosure.isOpen) return;
       const newRecords: recordsType = budgetModalRecords.slice();
       const regex = /[&'`"<>]/g;
       // バリデーション
@@ -95,7 +109,7 @@ export const useApp: useAppType = () => {
       setBudgetModalRecords([...newRecords]);
       if (!isUpdate) setIsUpdate(true);
     },
-    [budgetModalRecords]
+    [budgetModalRecords, closePopButtonDisclosure.isOpen, savePopButtonDisclosure.isOpen]
   );
 
   const budgetlist = useMemo<budgetListType>(
@@ -129,8 +143,7 @@ export const useApp: useAppType = () => {
 
   const total = useMemo<number>(() => budgetlist.reduce((total, curr) => total + curr.subtotal, 0), [budgetlist]);
 
-  const yesCallback = useCallback(() => {
-    // 更新処理
+  const onCloseYes = useCallback(() => {
     closePopButtonDisclosure.onClose();
     setBudgetModalRecords([]);
     setIsUpdate(false);
@@ -142,7 +155,7 @@ export const useApp: useAppType = () => {
     budgetModalDisclosure.onClose();
   }, []);
 
-  const noCallback = useCallback(() => {
+  const onCloseNo = useCallback(() => {
     closePopButtonDisclosure.onClose();
   }, []);
 
@@ -166,6 +179,7 @@ export const useApp: useAppType = () => {
 
   return {
     budgetModalDisclosure,
+    savePopButtonDisclosure,
     onBudgetModalOpen,
     onBudgetDetailDelete,
     onBudgetDetailAdd,
@@ -176,8 +190,8 @@ export const useApp: useAppType = () => {
     budgetListRecords,
     budgetModalRecords,
     closePopButtonDisclosure,
-    yesCallback,
-    noCallback,
+    onCloseYes,
+    onCloseNo,
     isUpdate,
   };
 };

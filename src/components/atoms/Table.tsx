@@ -33,7 +33,7 @@ export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames })
 export const PrimaryTableBody: FC<{
   records: recordsType;
   frontCheckbox?: {
-    Component: FC<{ onChange?: () => void }>;
+    Component: FC<{ onChange?: () => void; isChecked: boolean }>;
     callback: (arg: number) => void;
   };
   backButton?: {
@@ -55,6 +55,7 @@ export const PrimaryTableBody: FC<{
                 onChange={() => {
                   frontCheckbox.callback(recordIndex);
                 }}
+                isChecked={record.isDelete}
               />
             </Td>
           )}
@@ -91,7 +92,7 @@ export const PrimaryTableBody: FC<{
             <></>
           ) : (
             <Td isNumeric>
-              <backButton.Component onClick={() => backButton.callback(recordIndex)} w="full"/>
+              <backButton.Component onClick={() => backButton.callback(recordIndex)} w="full" />
             </Td>
           )}
         </Tr>
