@@ -9,6 +9,8 @@ export type AppType = {
   onBudgetModalOpen: (index: number) => void;
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
+  yesCallback: () => void;
+  noCallback: () => void;
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   total: number;
@@ -25,6 +27,8 @@ export const useApp: useAppType = () => {
   const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
   const budgetModalDisclosure = useDisclosure();
   const closePopButtonDisclosure = useDisclosure();
+
+  /** 予算詳細モーダルの表示処理 */
   const onBudgetModalOpen = useCallback(
     (index: number): void => {
       const newRecords: recordsType = budgets[index].budgetDetails.map(({ name, price }, i) => ({
@@ -117,6 +121,17 @@ export const useApp: useAppType = () => {
 
   const total = useMemo<number>(() => budgetlist.reduce((total, curr) => total + curr.subtotal, 0), [budgetlist]);
 
+  const yesCallback = useCallback(() => {
+    // 更新処理
+    closePopButtonDisclosure.onClose();
+    budgetModalDisclosure.onClose();
+  }, []);
+  
+  const noCallback = useCallback(() => {
+    closePopButtonDisclosure.onClose();
+    budgetModalDisclosure.onClose();
+  }, []);
+
   useEffect(() => {
     setBudgets([
       {
@@ -146,5 +161,7 @@ export const useApp: useAppType = () => {
     budgetListRecords,
     budgetModalRecords,
     closePopButtonDisclosure,
+    yesCallback,
+    noCallback,
   };
 };

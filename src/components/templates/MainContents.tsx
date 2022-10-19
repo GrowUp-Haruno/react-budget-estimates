@@ -16,6 +16,8 @@ export const MainContents: FC<AppType> = ({
   onNumberInputChange,
   onStringInputChange,
   closePopButtonDisclosure,
+  noCallback,
+  yesCallback,
 }) => {
   return (
     <MainLayout>
@@ -29,6 +31,8 @@ export const MainContents: FC<AppType> = ({
         onNumberInputChange={onNumberInputChange}
         onStringInputChange={onStringInputChange}
         closePopButtonDisclosure={closePopButtonDisclosure}
+        noCallback={noCallback}
+        yesCallback={yesCallback}
       />
     </MainLayout>
   );

@@ -49,7 +49,7 @@ export const PrimaryPopButton: FC<{
       closeOnEsc={false}
     >
       <PopoverTrigger>
-        <TriggerButton onClick={onToggle} />
+        <TriggerButton onClick={onToggle} w="full" />
       </PopoverTrigger>
       <Box>
         <PopoverContent>

@@ -14,6 +14,8 @@ export const BudgetModal: FC<{
   budgetModalRecords: recordsType;
   closePopButtonDisclosure: UseDisclosureReturn;
   budgetModalDisclosure: UseDisclosureReturn;
+  yesCallback?: () => void;
+  noCallback?: () => void;
 }> = ({
   onBudgetDetailDelete,
   onBudgetDetailAdd,
@@ -22,6 +24,8 @@ export const BudgetModal: FC<{
   budgetModalRecords,
   closePopButtonDisclosure,
   budgetModalDisclosure,
+  yesCallback = () => {},
+  noCallback = () => {},
 }) => {
   return (
     <PrimaryModal
@@ -36,14 +40,15 @@ export const BudgetModal: FC<{
             onStringInputChange={onStringInputChange}
           />
           <AddButton onClick={onBudgetDetailAdd} w="full" />
-          <ClosePopButton
-            noCallback={() => {}}
-            yesCallback={() => {}}
-            closePopButtonDisclosure={closePopButtonDisclosure}
-          />
         </VStack>
       }
-      // Foot={<CloseButon onClick={onClose} />}
+      Foot={
+        <ClosePopButton
+          noCallback={noCallback}
+          yesCallback={yesCallback}
+          closePopButtonDisclosure={closePopButtonDisclosure}
+        />
+      }
       modalDisclosure={budgetModalDisclosure}
       isModalCloseBUtton
     />
