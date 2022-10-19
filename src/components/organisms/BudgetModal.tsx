@@ -1,27 +1,27 @@
-import {  VStack } from "@chakra-ui/react";
+import { UseDisclosureReturn, VStack } from "@chakra-ui/react";
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
 import { PrimaryModal } from "../atoms/Modal";
-import { AddButton,  ClosePopButton } from "../molecules/CustomButton";
+import { AddButton, ClosePopButton } from "../molecules/CustomButton";
 import { DeleteCheckbox } from "../molecules/CustomCheckbox";
 import { DataGrid } from "../molecules/DataGrid";
 
 export const BudgetModal: FC<{
-  isOpen: boolean;
-  onClose: () => void;
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   budgetModalRecords: recordsType;
+  popButtonDisclosure: UseDisclosureReturn;
+  modalDisclosure: UseDisclosureReturn;
 }> = ({
-  isOpen,
-  onClose,
   onBudgetDetailDelete,
   onBudgetDetailAdd,
   onNumberInputChange,
   onStringInputChange,
   budgetModalRecords,
+  popButtonDisclosure,
+  modalDisclosure,
 }) => {
   return (
     <PrimaryModal
@@ -36,12 +36,11 @@ export const BudgetModal: FC<{
             onStringInputChange={onStringInputChange}
           />
           <AddButton onClick={onBudgetDetailAdd} w="full" />
-          <ClosePopButton noCallback={() => {}} yesCallback={() => {}}/>
+          <ClosePopButton noCallback={() => {}} yesCallback={() => {}} popButtonDisclosure={popButtonDisclosure} />
         </VStack>
       }
       // Foot={<CloseButon onClick={onClose} />}
-      isOpen={isOpen}
-      onClose={onClose}
+      modalDisclosure={modalDisclosure}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { ButtonProps, forwardRef } from "@chakra-ui/react";
+import { ButtonProps, forwardRef, UseDisclosureReturn } from "@chakra-ui/react";
 import { FC } from "react";
 import { PrimaryButton, PrimaryPopButton, SecondaryButton } from "../atoms/Button";
 
@@ -30,19 +30,21 @@ export const NoButon: FC<CustomButtonProps> = (props) => {
   return <SecondaryButton {...props}>いいえ</SecondaryButton>;
 };
 
-export const ClosePopButton: FC<{ yesCallback?: () => void; noCallback?: () => void }> = ({
-  yesCallback,
-  noCallback,
-}) => {
+export const ClosePopButton: FC<{
+  yesCallback?: () => void;
+  noCallback?: () => void;
+  popButtonDisclosure: UseDisclosureReturn;
+}> = ({ yesCallback = () => {}, noCallback = () => {}, popButtonDisclosure }) => {
   return (
     <PrimaryPopButton
       TriggerButton={CloseButton}
       title="確認"
       message="変更せずに閉じますか？"
       footerButtons={[
-        { Component: YesButon, callback: () => {} },
-        { Component: NoButon, callback: () => {} },
+        { Component: YesButon, callback: yesCallback },
+        { Component: NoButon, callback: noCallback },
       ]}
+      popButtonDisclosure={popButtonDisclosure}
     />
   );
 };

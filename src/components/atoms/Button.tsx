@@ -13,7 +13,7 @@ import {
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
-  useDisclosure,
+  UseDisclosureReturn,
 } from "@chakra-ui/react";
 
 const BaseButto = forwardRef<Omit<ButtonProps, "size">, "button">((props, ref) => {
@@ -33,8 +33,9 @@ export const PrimaryPopButton: FC<{
   footerButtons: Array<{ Component: FC<{ onClick?: ButtonProps["onClick"] }>; callback: () => void }>;
   title: string;
   message: string;
-}> = ({ title, TriggerButton, message, footerButtons }) => {
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  popButtonDisclosure: UseDisclosureReturn;
+}> = ({ title, TriggerButton, message, footerButtons, popButtonDisclosure }) => {
+  const { isOpen, onToggle, onClose } = popButtonDisclosure;
 
   return (
     <Popover placement="top" returnFocusOnClose={false} isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
@@ -57,10 +58,6 @@ export const PrimaryPopButton: FC<{
                 }}
               />
             ))}
-            {/* <Button variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="red">Apply</Button> */}
           </ButtonGroup>
         </PopoverFooter>
       </PopoverContent>
