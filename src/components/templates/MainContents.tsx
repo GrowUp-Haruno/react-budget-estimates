@@ -18,6 +18,8 @@ export const MainContents: FC<AppType> = ({
   closePopButtonDisclosure,
   noCallback,
   yesCallback,
+  isUpdate,
+  onModalClose,
 }) => {
   return (
     <MainLayout>
@@ -33,6 +35,8 @@ export const MainContents: FC<AppType> = ({
         closePopButtonDisclosure={closePopButtonDisclosure}
         noCallback={noCallback}
         yesCallback={yesCallback}
+        isUpdate={isUpdate}
+        onModalClose={onModalClose}
       />
     </MainLayout>
   );
