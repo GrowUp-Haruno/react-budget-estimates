@@ -1,5 +1,6 @@
 import { FC } from "react";
 import {
+  Box,
   Button,
   ButtonGroup,
   ButtonProps,
@@ -13,6 +14,7 @@ import {
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
+  // Portal,
   UseDisclosureReturn,
 } from "@chakra-ui/react";
 
@@ -49,25 +51,27 @@ export const PrimaryPopButton: FC<{
       <PopoverTrigger>
         <TriggerButton onClick={onToggle} />
       </PopoverTrigger>
-      <PopoverContent>
-        <PopoverHeader fontWeight="semibold">{title}</PopoverHeader>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverBody>{message}</PopoverBody>
-        <PopoverFooter display="flex" justifyContent="flex-end">
-          <ButtonGroup size="sm">
-            {footerButtons.map(({ Component, callback }, i) => (
-              <Component
-                key={i}
-                onClick={() => {
-                  callback();
-                  onClose();
-                }}
-              />
-            ))}
-          </ButtonGroup>
-        </PopoverFooter>
-      </PopoverContent>
+      <Box>
+        <PopoverContent>
+          <PopoverHeader fontWeight="semibold">{title}</PopoverHeader>
+          <PopoverArrow />
+          <PopoverCloseButton />
+          <PopoverBody>{message}</PopoverBody>
+          <PopoverFooter display="flex" justifyContent="flex-end">
+            <ButtonGroup size="sm">
+              {footerButtons.map(({ Component, callback }, i) => (
+                <Component
+                  key={i}
+                  onClick={() => {
+                    callback();
+                    onClose();
+                  }}
+                />
+              ))}
+            </ButtonGroup>
+          </PopoverFooter>
+        </PopoverContent>
+      </Box>
     </Popover>
   );
 };
