@@ -7,29 +7,31 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  UseDisclosureReturn,
 } from "@chakra-ui/react";
 
 type PrimaryModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
+  modalDisclosure: UseDisclosureReturn;
   title?: string;
   Body?: ReactNode;
   Foot?: ReactNode;
+  isModalCloseBUtton?: true;
 };
 
-export const PrimaryModal: FC<PrimaryModalProps> = ({
-  isOpen,
-  onClose,
-  title,
-  Body,
-  Foot,
-}) => {
+export const PrimaryModal: FC<PrimaryModalProps> = ({ modalDisclosure, title, Body, Foot, isModalCloseBUtton }) => {
+  const { isOpen, onClose } = modalDisclosure;
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={["sm", "md", "lg"]}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size={["full", "full", "2xl"]}
+      closeOnOverlayClick={false}
+      closeOnEsc={false}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
-        <ModalCloseButton />
+        {isModalCloseBUtton ? <ModalCloseButton/> : <></>}
         <ModalBody>{Body}</ModalBody>
         <ModalFooter>{Foot}</ModalFooter>
       </ModalContent>

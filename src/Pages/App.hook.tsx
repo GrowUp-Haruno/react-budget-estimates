@@ -1,4 +1,4 @@
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, UseDisclosureReturn } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { budgetListType, budgetType, recordsType } from "./App.model";
 
@@ -6,16 +6,20 @@ const maxPrice = 10000000;
 const maxNameLength = 20;
 
 export type AppType = {
-  isOpen: boolean;
-  onClose: () => void;
   onBudgetModalOpen: (index: number) => void;
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
+  onModalClose: () => void;
+  yesCallback: () => void;
+  noCallback: () => void;
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   total: number;
   budgetListRecords: recordsType;
   budgetModalRecords: recordsType;
+  budgetModalDisclosure: UseDisclosureReturn;
+  closePopButtonDisclosure: UseDisclosureReturn;
+  isUpdate: boolean;
 };
 
 type useAppType = () => AppType;
@@ -23,8 +27,12 @@ type useAppType = () => AppType;
 export const useApp: useAppType = () => {
   const [budgets, setBudgets] = useState<budgetType[]>([{ category: "", budgetDetails: [] }]);
   const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
 
+  const budgetModalDisclosure = useDisclosure();
+  const closePopButtonDisclosure = useDisclosure();
+
+  /** 予算詳細モーダルの表示処理 */
   const onBudgetModalOpen = useCallback(
     (index: number): void => {
       const newRecords: recordsType = budgets[index].budgetDetails.map(({ name, price }, i) => ({
@@ -34,7 +42,7 @@ export const useApp: useAppType = () => {
         isChange: false,
       }));
       setBudgetModalRecords([...newRecords]);
-      onOpen();
+      budgetModalDisclosure.onOpen();
     },
     [budgets]
   );
@@ -45,6 +53,7 @@ export const useApp: useAppType = () => {
       const newRecords: recordsType = budgetModalRecords.slice();
       newRecords[index].isDelete = !newRecords[index].isDelete;
       setBudgetModalRecords([...newRecords]);
+      if (!isUpdate) setIsUpdate(true);
     },
     [budgetModalRecords]
   );
@@ -54,6 +63,7 @@ export const useApp: useAppType = () => {
     const newRecords: recordsType = budgetModalRecords.slice();
     newRecords.push({ id: newRecords.length, fields: ["", 0], isDelete: false });
     setBudgetModalRecords([...newRecords]);
+    if (!isUpdate) setIsUpdate(true);
   }, [budgetModalRecords]);
 
   /** 数値変更関数 */
@@ -67,6 +77,7 @@ export const useApp: useAppType = () => {
 
       newRecords[recordIndex].fields[fieldIndex] = Number(targetValue);
       setBudgetModalRecords([...newRecords]);
+      if (!isUpdate) setIsUpdate(true);
     },
     [budgetModalRecords]
   );
@@ -82,6 +93,7 @@ export const useApp: useAppType = () => {
 
       newRecords[recordIndex].fields[fieldIndex] = e.target.value.replace(regex, "");
       setBudgetModalRecords([...newRecords]);
+      if (!isUpdate) setIsUpdate(true);
     },
     [budgetModalRecords]
   );
@@ -117,6 +129,23 @@ export const useApp: useAppType = () => {
 
   const total = useMemo<number>(() => budgetlist.reduce((total, curr) => total + curr.subtotal, 0), [budgetlist]);
 
+  const yesCallback = useCallback(() => {
+    // 更新処理
+    closePopButtonDisclosure.onClose();
+    setBudgetModalRecords([]);
+    setIsUpdate(false);
+    budgetModalDisclosure.onClose();
+  }, []);
+
+  const onModalClose = useCallback(() => {
+    setBudgetModalRecords([]);
+    budgetModalDisclosure.onClose();
+  }, []);
+
+  const noCallback = useCallback(() => {
+    closePopButtonDisclosure.onClose();
+  }, []);
+
   useEffect(() => {
     setBudgets([
       {
@@ -136,15 +165,19 @@ export const useApp: useAppType = () => {
   }, []);
 
   return {
-    isOpen,
-    onClose,
+    budgetModalDisclosure,
     onBudgetModalOpen,
     onBudgetDetailDelete,
     onBudgetDetailAdd,
     onNumberInputChange,
     onStringInputChange,
+    onModalClose,
     total,
     budgetListRecords,
     budgetModalRecords,
+    closePopButtonDisclosure,
+    yesCallback,
+    noCallback,
+    isUpdate,
   };
 };

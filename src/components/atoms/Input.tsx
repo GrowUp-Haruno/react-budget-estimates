@@ -6,5 +6,5 @@ export const BaseInput: FC<{
   value?: InputProps["value"];
   textAlign?: InputProps["textAlign"];
 }> = (props) => {
-  return <Input {...props} size={["xs", "sm", "md"]} variant="filled" />;
+  return <Input {...props} size={["xs", "xs", "md"]} variant="filled" />;
 };

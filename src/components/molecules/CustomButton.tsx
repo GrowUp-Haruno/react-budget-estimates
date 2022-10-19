@@ -1,7 +1,8 @@
+import { ButtonProps, forwardRef, UseDisclosureReturn } from "@chakra-ui/react";
 import { FC } from "react";
-import { PrimaryButton, PrimaryButtonProps, SecondaryButton } from "../atoms/Button";
+import { PrimaryButton, PrimaryPopButton, SecondaryButton } from "../atoms/Button";
 
-export type CustomButtonProps = Omit<PrimaryButtonProps, "children">;
+export type CustomButtonProps = Omit<ButtonProps, "children" | "colorScheme">;
 
 export const DetailButton: FC<CustomButtonProps> = (props) => {
   return <PrimaryButton {...props}>詳細</PrimaryButton>;
@@ -15,6 +16,35 @@ export const DeleteButton: FC<CustomButtonProps> = (props) => {
 export const AddButton: FC<CustomButtonProps> = (props) => {
   return <PrimaryButton {...props}>追加</PrimaryButton>;
 };
-export const CloseButon: FC<CustomButtonProps> = (props) => {
-  return <SecondaryButton {...props}>閉じる</SecondaryButton>;
+export const CloseButton = forwardRef<CustomButtonProps, "button">((props, ref) => {
+  return (
+    <SecondaryButton {...props} ref={ref}>
+      閉じる
+    </SecondaryButton>
+  );
+});
+export const YesButon: FC<CustomButtonProps> = (props) => {
+  return <PrimaryButton {...props}>はい</PrimaryButton>;
+};
+export const NoButon: FC<CustomButtonProps> = (props) => {
+  return <SecondaryButton {...props}>いいえ</SecondaryButton>;
+};
+
+export const ClosePopButton: FC<{
+  yesCallback?: () => void;
+  noCallback?: () => void;
+  closePopButtonDisclosure: UseDisclosureReturn;
+}> = ({ yesCallback = () => {}, noCallback = () => {}, closePopButtonDisclosure }) => {
+  return (
+    <PrimaryPopButton
+      TriggerButton={CloseButton}
+      title="確認"
+      message="変更せずに閉じますか？"
+      footerButtons={[
+        { Component: YesButon, callback: yesCallback },
+        { Component: NoButon, callback: noCallback },
+      ]}
+      popButtonDisclosure={closePopButtonDisclosure}
+    />
+  );
 };

@@ -1,27 +1,35 @@
-import { VStack } from "@chakra-ui/react";
+import { UseDisclosureReturn, VStack } from "@chakra-ui/react";
 import { FC } from "react";
 import { recordsType } from "../../Pages/App.model";
 import { PrimaryModal } from "../atoms/Modal";
-import { AddButton, CloseButon } from "../molecules/CustomButton";
+import { AddButton, CloseButton, ClosePopButton } from "../molecules/CustomButton";
 import { DeleteCheckbox } from "../molecules/CustomCheckbox";
 import { DataGrid } from "../molecules/DataGrid";
 
 export const BudgetModal: FC<{
-  isOpen: boolean;
-  onClose: () => void;
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
+  onModalClose: () => void;
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   budgetModalRecords: recordsType;
+  closePopButtonDisclosure: UseDisclosureReturn;
+  budgetModalDisclosure: UseDisclosureReturn;
+  yesCallback?: () => void;
+  noCallback?: () => void;
+  isUpdate: boolean;
 }> = ({
-  isOpen,
-  onClose,
   onBudgetDetailDelete,
   onBudgetDetailAdd,
   onNumberInputChange,
   onStringInputChange,
+  onModalClose,
   budgetModalRecords,
+  closePopButtonDisclosure,
+  budgetModalDisclosure,
+  yesCallback = () => {},
+  noCallback = () => {},
+  isUpdate,
 }) => {
   return (
     <PrimaryModal
@@ -38,9 +46,19 @@ export const BudgetModal: FC<{
           <AddButton onClick={onBudgetDetailAdd} w="full" />
         </VStack>
       }
-      Foot={<CloseButon onClick={onClose} />}
-      isOpen={isOpen}
-      onClose={onClose}
+      Foot={
+        isUpdate ? (
+          <ClosePopButton
+            noCallback={noCallback}
+            yesCallback={yesCallback}
+            closePopButtonDisclosure={closePopButtonDisclosure}
+          />
+        ) : (
+          <CloseButton onClick={onModalClose} w="full" />
+        )
+      }
+      modalDisclosure={budgetModalDisclosure}
+      isModalCloseBUtton
     />
   );
 };
