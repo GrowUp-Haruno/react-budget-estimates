@@ -6,7 +6,7 @@ import { BudgetModal } from "../organisms/BudgetModal";
 import { MainLayout } from "../atoms/Layout";
 
 export const MainContents: FC<AppType> = ({
-  modalDisclosure,
+  budgetModalDisclosure,
   onBudgetModalOpen,
   total,
   budgetListRecords,
@@ -15,20 +15,20 @@ export const MainContents: FC<AppType> = ({
   onBudgetDetailAdd,
   onNumberInputChange,
   onStringInputChange,
-  popButtonDisclosure,
+  closePopButtonDisclosure,
 }) => {
   return (
     <MainLayout>
       <BudgetList records={budgetListRecords} onBudgetModalOpen={onBudgetModalOpen} />
       <BudgetTotal total={total} />
       <BudgetModal
-        modalDisclosure={modalDisclosure}
+        budgetModalDisclosure={budgetModalDisclosure}
         budgetModalRecords={budgetModalRecords}
         onBudgetDetailDelete={onBudgetDetailDelete}
         onBudgetDetailAdd={onBudgetDetailAdd}
         onNumberInputChange={onNumberInputChange}
         onStringInputChange={onStringInputChange}
-        popButtonDisclosure={popButtonDisclosure}
+        closePopButtonDisclosure={closePopButtonDisclosure}
       />
     </MainLayout>
   );

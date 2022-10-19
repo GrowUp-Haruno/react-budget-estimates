@@ -14,8 +14,8 @@ export type AppType = {
   total: number;
   budgetListRecords: recordsType;
   budgetModalRecords: recordsType;
-  modalDisclosure: UseDisclosureReturn;
-  popButtonDisclosure: UseDisclosureReturn;
+  budgetModalDisclosure: UseDisclosureReturn;
+  closePopButtonDisclosure: UseDisclosureReturn;
 };
 
 type useAppType = () => AppType;
@@ -23,8 +23,8 @@ type useAppType = () => AppType;
 export const useApp: useAppType = () => {
   const [budgets, setBudgets] = useState<budgetType[]>([{ category: "", budgetDetails: [] }]);
   const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
-  const modalDisclosure = useDisclosure();
-  const popButtonDisclosure = useDisclosure();
+  const budgetModalDisclosure = useDisclosure();
+  const closePopButtonDisclosure = useDisclosure();
   const onBudgetModalOpen = useCallback(
     (index: number): void => {
       const newRecords: recordsType = budgets[index].budgetDetails.map(({ name, price }, i) => ({
@@ -34,7 +34,7 @@ export const useApp: useAppType = () => {
         isChange: false,
       }));
       setBudgetModalRecords([...newRecords]);
-      modalDisclosure.onOpen();
+      budgetModalDisclosure.onOpen();
     },
     [budgets]
   );
@@ -136,7 +136,7 @@ export const useApp: useAppType = () => {
   }, []);
 
   return {
-    modalDisclosure,
+    budgetModalDisclosure,
     onBudgetModalOpen,
     onBudgetDetailDelete,
     onBudgetDetailAdd,
@@ -145,6 +145,6 @@ export const useApp: useAppType = () => {
     total,
     budgetListRecords,
     budgetModalRecords,
-    popButtonDisclosure,
+    closePopButtonDisclosure,
   };
 };

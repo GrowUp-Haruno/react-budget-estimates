@@ -12,16 +12,16 @@ export const BudgetModal: FC<{
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   budgetModalRecords: recordsType;
-  popButtonDisclosure: UseDisclosureReturn;
-  modalDisclosure: UseDisclosureReturn;
+  closePopButtonDisclosure: UseDisclosureReturn;
+  budgetModalDisclosure: UseDisclosureReturn;
 }> = ({
   onBudgetDetailDelete,
   onBudgetDetailAdd,
   onNumberInputChange,
   onStringInputChange,
   budgetModalRecords,
-  popButtonDisclosure,
-  modalDisclosure,
+  closePopButtonDisclosure,
+  budgetModalDisclosure,
 }) => {
   return (
     <PrimaryModal
@@ -36,11 +36,16 @@ export const BudgetModal: FC<{
             onStringInputChange={onStringInputChange}
           />
           <AddButton onClick={onBudgetDetailAdd} w="full" />
-          <ClosePopButton noCallback={() => {}} yesCallback={() => {}} popButtonDisclosure={popButtonDisclosure} />
+          <ClosePopButton
+            noCallback={() => {}}
+            yesCallback={() => {}}
+            closePopButtonDisclosure={closePopButtonDisclosure}
+          />
         </VStack>
       }
       // Foot={<CloseButon onClick={onClose} />}
-      modalDisclosure={modalDisclosure}
+      modalDisclosure={budgetModalDisclosure}
+      isModalCloseBUtton
     />
   );
 };

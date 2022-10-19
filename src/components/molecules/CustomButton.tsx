@@ -33,8 +33,8 @@ export const NoButon: FC<CustomButtonProps> = (props) => {
 export const ClosePopButton: FC<{
   yesCallback?: () => void;
   noCallback?: () => void;
-  popButtonDisclosure: UseDisclosureReturn;
-}> = ({ yesCallback = () => {}, noCallback = () => {}, popButtonDisclosure }) => {
+  closePopButtonDisclosure: UseDisclosureReturn;
+}> = ({ yesCallback = () => {}, noCallback = () => {}, closePopButtonDisclosure }) => {
   return (
     <PrimaryPopButton
       TriggerButton={CloseButton}
@@ -44,7 +44,7 @@ export const ClosePopButton: FC<{
         { Component: YesButon, callback: yesCallback },
         { Component: NoButon, callback: noCallback },
       ]}
-      popButtonDisclosure={popButtonDisclosure}
+      popButtonDisclosure={closePopButtonDisclosure}
     />
   );
 };

@@ -15,9 +15,10 @@ type PrimaryModalProps = {
   title?: string;
   Body?: ReactNode;
   Foot?: ReactNode;
+  isModalCloseBUtton?: true;
 };
 
-export const PrimaryModal: FC<PrimaryModalProps> = ({ modalDisclosure, title, Body, Foot }) => {
+export const PrimaryModal: FC<PrimaryModalProps> = ({ modalDisclosure, title, Body, Foot, isModalCloseBUtton }) => {
   const { isOpen, onClose } = modalDisclosure;
   return (
     <Modal
@@ -30,7 +31,7 @@ export const PrimaryModal: FC<PrimaryModalProps> = ({ modalDisclosure, title, Bo
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
-        <ModalCloseButton />
+        {isModalCloseBUtton ? <ModalCloseButton/> : <></>}
         <ModalBody>{Body}</ModalBody>
         <ModalFooter>{Foot}</ModalFooter>
       </ModalContent>

@@ -38,7 +38,14 @@ export const PrimaryPopButton: FC<{
   const { isOpen, onToggle, onClose } = popButtonDisclosure;
 
   return (
-    <Popover placement="top" returnFocusOnClose={false} isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
+    <Popover
+      placement="top"
+      returnFocusOnClose={false}
+      isOpen={isOpen}
+      onClose={onClose}
+      closeOnBlur={false}
+      closeOnEsc={false}
+    >
       <PopoverTrigger>
         <TriggerButton onClick={onToggle} />
       </PopoverTrigger>
