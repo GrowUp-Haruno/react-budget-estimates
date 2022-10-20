@@ -26,12 +26,17 @@ export type AppType = {
 type useAppType = () => AppType;
 
 export const useApp: useAppType = () => {
+  // 予算データ
   const [budgets, setBudgets] = useState<budgetType[]>([{ category: "", budgetDetails: [] }]);
+  // 予算詳細モーダル用のテンプレートデータ
   const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
+  // 予算変更の更新フラグ
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
-
+  // 予算モーダルの開閉ロジック
   const budgetModalDisclosure = useDisclosure();
+  // 閉じるポップボタンの開閉ロジック
   const closePopButtonDisclosure = useDisclosure();
+  // 保存ポップボタンの開閉ロジック
   const savePopButtonDisclosure = useDisclosure();
 
   /** 予算詳細モーダルの表示処理 */
@@ -52,34 +57,25 @@ export const useApp: useAppType = () => {
   /** 予算詳細を仮削除 */
   const onBudgetDetailDelete = useCallback(
     (index: number): void => {
-      // popButton表示中は処理を無効化
-      if (closePopButtonDisclosure.isOpen) return;
-      if (savePopButtonDisclosure.isOpen) return;
       const newRecords: recordsType = budgetModalRecords.slice();
       newRecords[index].isDelete = !newRecords[index].isDelete;
       setBudgetModalRecords([...newRecords]);
       if (!isUpdate) setIsUpdate(true);
     },
-    [budgetModalRecords, closePopButtonDisclosure.isOpen, savePopButtonDisclosure.isOpen]
+    [budgetModalRecords]
   );
 
   /** 予算詳細を仮追加 */
   const onBudgetDetailAdd = useCallback((): void => {
-    // popButton表示中は処理を無効化
-    if (closePopButtonDisclosure.isOpen) return;
-    if (savePopButtonDisclosure.isOpen) return;
     const newRecords: recordsType = budgetModalRecords.slice();
     newRecords.push({ id: newRecords.length, fields: ["", 0], isDelete: false });
     setBudgetModalRecords([...newRecords]);
     if (!isUpdate) setIsUpdate(true);
-  }, [budgetModalRecords, closePopButtonDisclosure.isOpen, savePopButtonDisclosure.isOpen]);
+  }, [budgetModalRecords]);
 
   /** 数値変更関数 */
   const onNumberInputChange = useCallback(
     (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>): void => {
-      // popButton表示中は処理を無効化
-      if (closePopButtonDisclosure.isOpen) return;
-      if (savePopButtonDisclosure.isOpen) return;
       const newRecords: recordsType = budgetModalRecords.slice();
       const targetValue = e.target.value.replace(/,/g, "");
       // バリデーション
@@ -90,15 +86,12 @@ export const useApp: useAppType = () => {
       setBudgetModalRecords([...newRecords]);
       if (!isUpdate) setIsUpdate(true);
     },
-    [budgetModalRecords, closePopButtonDisclosure.isOpen, savePopButtonDisclosure.isOpen]
+    [budgetModalRecords]
   );
 
   /** 文字変更関数 */
   const onStringInputChange = useCallback(
     (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>): void => {
-      // popButton表示中は処理を無効化
-      if (closePopButtonDisclosure.isOpen) return;
-      if (savePopButtonDisclosure.isOpen) return;
       const newRecords: recordsType = budgetModalRecords.slice();
       const regex = /[&'`"<>]/g;
       // バリデーション
@@ -109,7 +102,7 @@ export const useApp: useAppType = () => {
       setBudgetModalRecords([...newRecords]);
       if (!isUpdate) setIsUpdate(true);
     },
-    [budgetModalRecords, closePopButtonDisclosure.isOpen, savePopButtonDisclosure.isOpen]
+    [budgetModalRecords]
   );
 
   const budgetlist = useMemo<budgetListType>(

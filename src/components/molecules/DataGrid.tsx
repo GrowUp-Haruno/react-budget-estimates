@@ -17,7 +17,16 @@ export const DataGrid: FC<{
   };
   onNumberInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ columnNames, records, backButton, frontCheckbox, onNumberInputChange, onStringInputChange }) => {
+  isDisabled?: boolean;
+}> = ({
+  columnNames,
+  records,
+  backButton,
+  frontCheckbox,
+  onNumberInputChange,
+  onStringInputChange,
+  isDisabled = false,
+}) => {
   if (records.length === 0) return <></>;
   return (
     <PrimaryTable
@@ -29,6 +38,7 @@ export const DataGrid: FC<{
           frontCheckbox={frontCheckbox}
           onNumberInputChange={onNumberInputChange}
           onStringInputChange={onStringInputChange}
+          isDisabled={isDisabled}
         />
       }
     />

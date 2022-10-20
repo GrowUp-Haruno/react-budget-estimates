@@ -44,8 +44,13 @@ export const BudgetModal: FC<{
             frontCheckbox={{ Component: DeleteCheckbox, callback: onBudgetDetailDelete }}
             onNumberInputChange={onNumberInputChange}
             onStringInputChange={onStringInputChange}
+            isDisabled={closePopButtonDisclosure.isOpen || savePopButtonDisclosure.isOpen}
           />
-          <AddButton onClick={onBudgetDetailAdd} w="full" />
+          <AddButton
+            onClick={onBudgetDetailAdd}
+            w="full"
+            isDisabled={closePopButtonDisclosure.isOpen || savePopButtonDisclosure.isOpen}
+          />
         </VStack>
       }
       Foot={
@@ -53,13 +58,13 @@ export const BudgetModal: FC<{
           <HStack w="full">
             <SavePopButton
               savePopButtonDisclosure={savePopButtonDisclosure}
-              disableToggle={closePopButtonDisclosure.isOpen}
+              isDisabled={closePopButtonDisclosure.isOpen}
             />
             <ClosePopButton
               onYes={onCloseYes}
               onNo={onCloseNo}
               closePopButtonDisclosure={closePopButtonDisclosure}
-              disableToggle={savePopButtonDisclosure.isOpen}
+              isDisabled={savePopButtonDisclosure.isOpen}
             />
           </HStack>
         ) : (

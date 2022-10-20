@@ -36,8 +36,8 @@ export const PrimaryPopButton: FC<{
   title: string;
   message: string;
   popButtonDisclosure: UseDisclosureReturn;
-  disableToggle?: boolean;
-}> = ({ title, TriggerButton, message, footerButtons, popButtonDisclosure, disableToggle = false }) => {
+  isDisabled?: boolean;
+}> = ({ title, TriggerButton, message, footerButtons, popButtonDisclosure, isDisabled = false }) => {
   const { isOpen, onToggle, onClose } = popButtonDisclosure;
 
   return (
@@ -50,7 +50,7 @@ export const PrimaryPopButton: FC<{
       closeOnEsc={false}
     >
       <PopoverTrigger>
-        <TriggerButton onClick={disableToggle ? () => {} : onToggle} w="full" />
+        <TriggerButton onClick={onToggle} w="full" isDisabled={isDisabled} />
       </PopoverTrigger>
       <Box>
         <PopoverContent>

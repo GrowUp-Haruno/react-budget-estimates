@@ -41,8 +41,8 @@ export const ClosePopButton: FC<{
   onYes?: () => void;
   onNo?: () => void;
   closePopButtonDisclosure: UseDisclosureReturn;
-  disableToggle?: boolean;
-}> = ({ onYes = () => {}, onNo = () => {}, closePopButtonDisclosure, disableToggle }) => {
+  isDisabled?: boolean;
+}> = ({ onYes = () => {}, onNo = () => {}, closePopButtonDisclosure, isDisabled }) => {
   return (
     <PrimaryPopButton
       TriggerButton={CloseButton}
@@ -53,16 +53,17 @@ export const ClosePopButton: FC<{
         { Component: NoButon, callback: onNo },
       ]}
       popButtonDisclosure={closePopButtonDisclosure}
-      disableToggle={disableToggle}
+      isDisabled={isDisabled}
     />
   );
 };
+
 export const SavePopButton: FC<{
   onYes?: () => void;
   onNo?: () => void;
   savePopButtonDisclosure: UseDisclosureReturn;
-  disableToggle?: boolean;
-}> = ({ onYes = () => {}, onNo = () => {}, savePopButtonDisclosure, disableToggle }) => {
+  isDisabled?: boolean;
+}> = ({ onYes = () => {}, onNo = () => {}, savePopButtonDisclosure, isDisabled }) => {
   return (
     <PrimaryPopButton
       TriggerButton={SaveButon}
@@ -73,7 +74,7 @@ export const SavePopButton: FC<{
         { Component: NoButon, callback: onNo },
       ]}
       popButtonDisclosure={savePopButtonDisclosure}
-      disableToggle={disableToggle}
+      isDisabled={isDisabled}
     />
   );
 };
