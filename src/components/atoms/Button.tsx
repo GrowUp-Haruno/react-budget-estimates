@@ -61,13 +61,7 @@ export const PrimaryPopButton: FC<{
           <PopoverFooter display="flex" justifyContent="flex-end">
             <ButtonGroup size="sm">
               {footerButtons.map(({ Component, callback }, i) => (
-                <Component
-                  key={i}
-                  onClick={() => {
-                    callback();
-                    onClose();
-                  }}
-                />
+                <Component key={i} onClick={callback} />
               ))}
             </ButtonGroup>
           </PopoverFooter>

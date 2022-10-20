@@ -14,6 +14,8 @@ export type AppType = {
   onCloseNo: () => void;
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSaveYes: () => void;
+  onSaveNo: () => void;
   total: number;
   budgetListRecords: recordsType;
   budgetModalRecords: recordsType;
@@ -30,6 +32,8 @@ export const useApp: useAppType = () => {
   const [budgets, setBudgets] = useState<budgetType[]>([{ category: "", budgetDetails: [] }]);
   // 予算詳細モーダル用のテンプレートデータ
   const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
+  // 更新するbudgetsのインデックス
+  const [updateBudgetIndex, setUpdateBudgetIndex] = useState<number | undefined>();
   // 予算変更の更新フラグ
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   // 予算モーダルの開閉ロジック
@@ -46,9 +50,9 @@ export const useApp: useAppType = () => {
         id: i,
         fields: [name, price],
         isDelete: false,
-        isChange: false,
       }));
       setBudgetModalRecords([...newRecords]);
+      setUpdateBudgetIndex(index);
       budgetModalDisclosure.onOpen();
     },
     [budgets]
@@ -105,6 +109,7 @@ export const useApp: useAppType = () => {
     [budgetModalRecords]
   );
 
+  /** カテゴリ別予算リスト */
   const budgetlist = useMemo<budgetListType>(
     () =>
       budgets.map((budget) =>
@@ -122,20 +127,21 @@ export const useApp: useAppType = () => {
     [budgets]
   );
 
+  /** カテゴリ別予算レコード */
   const budgetListRecords: recordsType = useMemo<recordsType>(
     () =>
       budgetlist.map(({ category, subtotal }, i) => ({
         id: i,
         fields: [category, subtotal.toLocaleString("ja-JP")],
         isDelete: false,
-        isUpdate: false,
-        isChange: false,
       })),
     [budgetlist]
   );
 
+  /** 予算合計 */
   const total = useMemo<number>(() => budgetlist.reduce((total, curr) => total + curr.subtotal, 0), [budgetlist]);
 
+  /** 閉じるポップボタンの「はい」を選択した場合の処理 */
   const onCloseYes = useCallback(() => {
     closePopButtonDisclosure.onClose();
     setBudgetModalRecords([]);
@@ -143,13 +149,35 @@ export const useApp: useAppType = () => {
     budgetModalDisclosure.onClose();
   }, []);
 
+  /** 閉じるポップボタンの「いいえ」を選択した場合の処理 */
+  const onCloseNo = useCallback(() => {
+    closePopButtonDisclosure.onClose();
+  }, []);
+
+  /** 閉じるボタン（未編集時）を押した場合の処理 */
   const onModalClose = useCallback(() => {
     setBudgetModalRecords([]);
     budgetModalDisclosure.onClose();
   }, []);
 
-  const onCloseNo = useCallback(() => {
-    closePopButtonDisclosure.onClose();
+  /** 保存ポップボタンの「はい」を選択した場合の処理 */
+  const onSaveYes = useCallback(() => {
+    if (updateBudgetIndex === undefined) return;
+    const tempBudgets: budgetType[] = budgets.slice();
+    const undeleteBudgetModalRecords = budgetModalRecords.filter((record) => !record.isDelete);
+    const newBudgetDetails = undeleteBudgetModalRecords.map((record) => {
+      return { name: record.fields[0].toString(), price: Number(record.fields[1]) };
+    });
+    tempBudgets[updateBudgetIndex].budgetDetails = newBudgetDetails;
+    setBudgets([...tempBudgets]);
+    setBudgetModalRecords([...undeleteBudgetModalRecords]);
+    setIsUpdate(false);
+    savePopButtonDisclosure.onClose();
+  }, [updateBudgetIndex, budgetModalRecords, budgets]);
+
+  /** 保存ポップボタンの「いいえ」を選択した場合の処理 */
+  const onSaveNo = useCallback(() => {
+    savePopButtonDisclosure.onClose();
   }, []);
 
   useEffect(() => {
@@ -179,6 +207,8 @@ export const useApp: useAppType = () => {
     onNumberInputChange,
     onStringInputChange,
     onModalClose,
+    onSaveYes,
+    onSaveNo,
     total,
     budgetListRecords,
     budgetModalRecords,

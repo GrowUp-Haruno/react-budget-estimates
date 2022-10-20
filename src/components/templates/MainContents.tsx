@@ -19,6 +19,8 @@ export const MainContents: FC<AppType> = ({
   savePopButtonDisclosure,
   onCloseNo,
   onCloseYes,
+  onSaveYes,
+  onSaveNo,
   isUpdate,
   onModalClose,
 }) => {
@@ -37,6 +39,8 @@ export const MainContents: FC<AppType> = ({
         savePopButtonDisclosure={savePopButtonDisclosure}
         onCloseNo={onCloseNo}
         onCloseYes={onCloseYes}
+        onSaveYes={onSaveYes}
+        onSaveNo={onSaveNo}
         isUpdate={isUpdate}
         onModalClose={onModalClose}
       />

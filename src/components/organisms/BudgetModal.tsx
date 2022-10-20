@@ -12,12 +12,14 @@ export const BudgetModal: FC<{
   onModalClose: () => void;
   onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onCloseYes?: () => void;
+  onCloseNo?: () => void;
+  onSaveYes?: () => void;
+  onSaveNo?: () => void;
   budgetModalRecords: recordsType;
   closePopButtonDisclosure: UseDisclosureReturn;
   savePopButtonDisclosure: UseDisclosureReturn;
   budgetModalDisclosure: UseDisclosureReturn;
-  onCloseYes?: () => void;
-  onCloseNo?: () => void;
   isUpdate: boolean;
 }> = ({
   onBudgetDetailDelete,
@@ -31,6 +33,8 @@ export const BudgetModal: FC<{
   budgetModalDisclosure,
   onCloseYes = () => {},
   onCloseNo = () => {},
+  onSaveYes = () => {},
+  onSaveNo = () => {},
   isUpdate,
 }) => {
   return (
@@ -57,6 +61,8 @@ export const BudgetModal: FC<{
         isUpdate ? (
           <HStack w="full">
             <SavePopButton
+              onYes={onSaveYes}
+              onNo={onSaveNo}
               savePopButtonDisclosure={savePopButtonDisclosure}
               isDisabled={closePopButtonDisclosure.isOpen}
             />
