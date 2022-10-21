@@ -36,7 +36,8 @@ export const PrimaryPopButton: FC<{
   title: string;
   message: string;
   popButtonDisclosure: UseDisclosureReturn;
-}> = ({ title, TriggerButton, message, footerButtons, popButtonDisclosure }) => {
+  isDisabled?: boolean;
+}> = ({ title, TriggerButton, message, footerButtons, popButtonDisclosure, isDisabled = false }) => {
   const { isOpen, onToggle, onClose } = popButtonDisclosure;
 
   return (
@@ -49,7 +50,7 @@ export const PrimaryPopButton: FC<{
       closeOnEsc={false}
     >
       <PopoverTrigger>
-        <TriggerButton onClick={onToggle} w="full" />
+        <TriggerButton onClick={onToggle} w="full" isDisabled={isDisabled} />
       </PopoverTrigger>
       <Box>
         <PopoverContent>
@@ -60,13 +61,7 @@ export const PrimaryPopButton: FC<{
           <PopoverFooter display="flex" justifyContent="flex-end">
             <ButtonGroup size="sm">
               {footerButtons.map(({ Component, callback }, i) => (
-                <Component
-                  key={i}
-                  onClick={() => {
-                    callback();
-                    onClose();
-                  }}
-                />
+                <Component key={i} onClick={callback} />
               ))}
             </ButtonGroup>
           </PopoverFooter>

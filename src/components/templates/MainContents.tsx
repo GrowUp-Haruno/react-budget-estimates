@@ -16,8 +16,11 @@ export const MainContents: FC<AppType> = ({
   onNumberInputChange,
   onStringInputChange,
   closePopButtonDisclosure,
-  noCallback,
-  yesCallback,
+  savePopButtonDisclosure,
+  onCloseNo,
+  onCloseYes,
+  onSaveYes,
+  onSaveNo,
   isUpdate,
   onModalClose,
 }) => {
@@ -33,8 +36,11 @@ export const MainContents: FC<AppType> = ({
         onNumberInputChange={onNumberInputChange}
         onStringInputChange={onStringInputChange}
         closePopButtonDisclosure={closePopButtonDisclosure}
-        noCallback={noCallback}
-        yesCallback={yesCallback}
+        savePopButtonDisclosure={savePopButtonDisclosure}
+        onCloseNo={onCloseNo}
+        onCloseYes={onCloseYes}
+        onSaveYes={onSaveYes}
+        onSaveNo={onSaveNo}
         isUpdate={isUpdate}
         onModalClose={onModalClose}
       />

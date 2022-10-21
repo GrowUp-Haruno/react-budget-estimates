@@ -33,7 +33,7 @@ export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames })
 export const PrimaryTableBody: FC<{
   records: recordsType;
   frontCheckbox?: {
-    Component: FC<{ onChange?: () => void }>;
+    Component: FC<{ onChange?: () => void; isChecked: boolean; isDisabled: boolean }>;
     callback: (arg: number) => void;
   };
   backButton?: {
@@ -42,7 +42,8 @@ export const PrimaryTableBody: FC<{
   };
   onNumberInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onStringInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ records, backButton, frontCheckbox, onNumberInputChange, onStringInputChange }) => {
+  isDisabled: boolean;
+}> = ({ records, backButton, frontCheckbox, onNumberInputChange, onStringInputChange, isDisabled }) => {
   return (
     <>
       {records.map((record, recordIndex) => (
@@ -55,6 +56,8 @@ export const PrimaryTableBody: FC<{
                 onChange={() => {
                   frontCheckbox.callback(recordIndex);
                 }}
+                isChecked={record.isDelete}
+                isDisabled={isDisabled}
               />
             </Td>
           )}
@@ -70,6 +73,7 @@ export const PrimaryTableBody: FC<{
                     }}
                     value={field.toLocaleString("ja-JP")}
                     textAlign="right"
+                    isDisabled={isDisabled}
                   />
                 );
               else if (typeof field === "string" && onStringInputChange === undefined) return <Text>{field}</Text>;
@@ -80,6 +84,7 @@ export const PrimaryTableBody: FC<{
                       onStringInputChange(recordIndex, fieldIndex, e);
                     }}
                     value={field}
+                    isDisabled={isDisabled}
                   />
                 );
               return <></>;
@@ -91,7 +96,7 @@ export const PrimaryTableBody: FC<{
             <></>
           ) : (
             <Td isNumeric>
-              <backButton.Component onClick={() => backButton.callback(recordIndex)} w="full"/>
+              <backButton.Component onClick={() => backButton.callback(recordIndex)} isDisabled={isDisabled} w="full" />
             </Td>
           )}
         </Tr>

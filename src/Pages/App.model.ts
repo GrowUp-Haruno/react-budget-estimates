@@ -1,4 +1,5 @@
 export type budgetType = {
+  id: number;
   category: string;
   budgetDetails: Array<{
     name: string;
