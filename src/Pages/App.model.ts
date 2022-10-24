@@ -1,4 +1,5 @@
 export type budgetType = {
+  id: number;
   category: string;
   budgetDetails: Array<{
     name: string;
@@ -13,5 +14,6 @@ export type budgetListType = Array<{
 
 export type recordsType = Array<{
   id: number;
-  fields: string[];
+  fields: Array<string | number>;
+  isDelete: boolean;
 }>;
