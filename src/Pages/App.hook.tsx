@@ -57,6 +57,7 @@ export const useApp: useAppType = () => {
       }));
       setBudgetModalRecords([...newRecords]);
       setUpdateBudgetIndex(index);
+      setIsUpdate(false);
       budgetModalDisclosure.onOpen();
     },
     [budgets]

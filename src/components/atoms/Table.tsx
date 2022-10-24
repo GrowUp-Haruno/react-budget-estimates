@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { recordsType } from "../../Pages/App.model";
-import { BaseInput } from "./Input";
+import { PrimaryInput } from "./Input";
 import { CustomButtonProps } from "../molecules/CustomButton";
 
 export const PrimaryTable: FC<{
@@ -67,24 +67,26 @@ export const PrimaryTableBody: FC<{
                 return <Text>{field.toLocaleString("ja-JP")}</Text>;
               else if (typeof field === "number" && onNumberInputChange !== undefined)
                 return (
-                  <BaseInput
+                  <PrimaryInput
                     onChange={(e) => {
                       onNumberInputChange(recordIndex, fieldIndex, e);
                     }}
                     value={field.toLocaleString("ja-JP")}
                     textAlign="right"
                     isDisabled={isDisabled}
+                    isDelete={record.isDelete}
                   />
                 );
               else if (typeof field === "string" && onStringInputChange === undefined) return <Text>{field}</Text>;
               else if (typeof field === "string" && onStringInputChange !== undefined)
                 return (
-                  <BaseInput
+                  <PrimaryInput
                     onChange={(e) => {
                       onStringInputChange(recordIndex, fieldIndex, e);
                     }}
                     value={field}
                     isDisabled={isDisabled}
+                    isDelete={record.isDelete}
                   />
                 );
               return <></>;
