@@ -30,6 +30,13 @@ export const SaveButon = forwardRef<CustomButtonProps, "button">((props, ref) =>
     </PrimaryButton>
   );
 });
+export const DeleteDBButon = forwardRef<CustomButtonProps, "button">((props, ref) => {
+  return (
+    <SecondaryButton {...props} ref={ref}>
+      全てのデータを削除
+    </SecondaryButton>
+  );
+});
 export const YesButon: FC<CustomButtonProps> = (props) => {
   return <PrimaryButton {...props}>はい</PrimaryButton>;
 };
@@ -77,6 +84,33 @@ export const SavePopButton: FC<{
         { Component: NoButon, callback: onNo },
       ]}
       popButtonDisclosure={savePopButtonDisclosure}
+      isDisabled={isDisabled}
+    />
+  );
+};
+
+type PopButtonProps = {
+  onYes?: () => void;
+  onNo?: () => void;
+  disclosure: UseDisclosureReturn;
+  isDisabled?: boolean;
+};
+export const DeleteDBPopButton: FC<PopButtonProps> = ({
+  onYes = () => {},
+  onNo = () => {},
+  disclosure,
+  isDisabled,
+}) => {
+  return (
+    <PrimaryPopButton
+      TriggerButton={DeleteDBButon}
+      title="データ削除"
+      message="予算データを削除しますか？"
+      footerButtons={[
+        { Component: YesButon, callback: onYes },
+        { Component: NoButon, callback: onNo },
+      ]}
+      popButtonDisclosure={disclosure}
       isDisabled={isDisabled}
     />
   );
