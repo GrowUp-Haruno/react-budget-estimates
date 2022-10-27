@@ -16,10 +16,10 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      // registerType: "autoUpdate",
       devOptions: {
         enabled: true,
       },
+      includeAssets: ["favicon.ico", "vite.svg"],
       manifest: {
         theme_color: "#f69435",
         background_color: "#ffffff",
