@@ -21,10 +21,11 @@ export const BudgetModal: FC<BudgetModalProps> = ({
   onSaveYes = () => {},
   onSaveNo = () => {},
   isUpdate,
+  budgetCategory,
 }) => {
   return (
     <PrimaryModal
-      title="予算設定"
+      title={`${budgetCategory}の予算設定`}
       Body={
         <VStack spacing={8}>
           <DataGrid

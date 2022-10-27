@@ -31,6 +31,7 @@ export type BudgetModalProps = {
   closePopButtonDisclosure: UseDisclosureReturn;
   savePopButtonDisclosure: UseDisclosureReturn;
   isUpdate: boolean;
+  budgetCategory: string;
 };
 
 export type AppType = {
@@ -43,8 +44,9 @@ type useAppType = () => AppType;
 
 export const useApp: useAppType = () => {
   // 予算データ
-  // const [budgets, setBudgets] = useState<budgetType[]>();
   const budgets = useLiveQuery(async () => await budgetDB.budget.toArray(), []);
+  // 予算カテゴリ
+  const [budgetCategory, setBudgetCategory] = useState<string>("");
   // 予算詳細モーダル用のテンプレートデータ
   const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
   // 更新するbudgetsのインデックス
@@ -69,6 +71,7 @@ export const useApp: useAppType = () => {
       }));
       setBudgetModalRecords([...newRecords]);
       setUpdateBudgetIndex(index);
+      setBudgetCategory(budgets[index].category);
       setIsUpdate(false);
       budgetModalDisclosure.onOpen();
     },
@@ -212,6 +215,7 @@ export const useApp: useAppType = () => {
       total,
     },
     budgetModalProps: {
+      budgetCategory,
       budgetModalDisclosure,
       savePopButtonDisclosure,
       budgetModalRecords,
