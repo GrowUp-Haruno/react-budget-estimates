@@ -3,6 +3,7 @@ import { PrimaryLayout } from "../components/atoms/Layout";
 import { Footer } from "../components/templates/Footer";
 import { MainContents } from "../components/templates/MainContents";
 import { Navbar } from "../components/templates/Navbar";
+import ReloadPrompt from "../components/templates/ReloadPrompt";
 import { useApp } from "./App.hook";
 
 export const App: FC = () => {
@@ -12,6 +13,7 @@ export const App: FC = () => {
       <Navbar />
       <MainContents {...AppType} />
       <Footer />
+      <ReloadPrompt />
     </PrimaryLayout>
   );
 };
