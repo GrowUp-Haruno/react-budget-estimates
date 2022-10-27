@@ -1,27 +1,12 @@
-import { UseDisclosureReturn, VStack, HStack } from "@chakra-ui/react";
+import { VStack, HStack } from "@chakra-ui/react";
 import { FC } from "react";
-import { recordsType } from "../../Pages/App.model";
+import { BudgetModalProps } from "../../Pages/App.hook";
 import { PrimaryModal } from "../atoms/Modal";
 import { AddButton, CloseButton, ClosePopButton, SavePopButton } from "../molecules/CustomButton";
 import { DeleteCheckbox } from "../molecules/CustomCheckbox";
 import { DataGrid } from "../molecules/DataGrid";
 
-export const BudgetModal: FC<{
-  onBudgetDetailDelete: (index: number) => void;
-  onBudgetDetailAdd: () => void;
-  onModalClose: () => void;
-  onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-  onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-  onCloseYes?: () => void;
-  onCloseNo?: () => void;
-  onSaveYes?: () => void;
-  onSaveNo?: () => void;
-  budgetModalRecords: recordsType;
-  closePopButtonDisclosure: UseDisclosureReturn;
-  savePopButtonDisclosure: UseDisclosureReturn;
-  budgetModalDisclosure: UseDisclosureReturn;
-  isUpdate: boolean;
-}> = ({
+export const BudgetModal: FC<BudgetModalProps> = ({
   onBudgetDetailDelete,
   onBudgetDetailAdd,
   onNumberInputChange,

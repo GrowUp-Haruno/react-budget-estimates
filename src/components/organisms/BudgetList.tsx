@@ -1,18 +1,15 @@
 import { Container } from "@chakra-ui/react";
 import { FC } from "react";
-import { recordsType } from "../../Pages/App.model";
+import { BudgetListProps } from "../../Pages/App.hook";
 import { DetailButton } from "../molecules/CustomButton";
 import { DataGrid } from "../molecules/DataGrid";
 
-export const BudgetList: FC<{
-  records: recordsType;
-  onBudgetModalOpen: (index: number) => void;
-}> = ({ records, onBudgetModalOpen }) => {
+export const BudgetList: FC<BudgetListProps> = ({ budgetListRecords, onBudgetModalOpen }) => {
   return (
     <Container>
       <DataGrid
         columnNames={["カテゴリ", "料金", ""]}
-        records={records}
+        records={budgetListRecords}
         backButton={{ Component: DetailButton, callback: onBudgetModalOpen }}
       />
     </Container>

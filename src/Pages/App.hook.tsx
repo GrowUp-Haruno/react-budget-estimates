@@ -7,8 +7,16 @@ import { useLiveQuery } from "dexie-react-hooks";
 const maxPrice = 10000000;
 const maxNameLength = 20;
 
-export type AppType = {
+export type BudgetListProps = {
+  budgetListRecords: recordsType;
   onBudgetModalOpen: (index: number) => void;
+};
+
+export type BudgetTotalProps = {
+  total: number;
+};
+
+export type BudgetModalProps = {
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
   onModalClose: () => void;
@@ -18,13 +26,17 @@ export type AppType = {
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onSaveYes: () => void;
   onSaveNo: () => void;
-  total: number;
-  budgetListRecords: recordsType;
   budgetModalRecords: recordsType;
   budgetModalDisclosure: UseDisclosureReturn;
   closePopButtonDisclosure: UseDisclosureReturn;
   savePopButtonDisclosure: UseDisclosureReturn;
   isUpdate: boolean;
+};
+
+export type AppType = {
+  budgetListProps: BudgetListProps;
+  budgetTotalProps: BudgetTotalProps;
+  budgetModalProps: BudgetModalProps;
 };
 
 type useAppType = () => AppType;
@@ -192,22 +204,28 @@ export const useApp: useAppType = () => {
   }, []);
 
   return {
-    budgetModalDisclosure,
-    savePopButtonDisclosure,
-    onBudgetModalOpen,
-    onBudgetDetailDelete,
-    onBudgetDetailAdd,
-    onNumberInputChange,
-    onStringInputChange,
-    onModalClose,
-    onSaveYes,
-    onSaveNo,
-    total,
-    budgetListRecords,
-    budgetModalRecords,
-    closePopButtonDisclosure,
-    onCloseYes,
-    onCloseNo,
-    isUpdate,
+    budgetListProps: {
+      budgetListRecords,
+      onBudgetModalOpen,
+    },
+    budgetTotalProps: {
+      total,
+    },
+    budgetModalProps: {
+      budgetModalDisclosure,
+      savePopButtonDisclosure,
+      budgetModalRecords,
+      closePopButtonDisclosure,
+      isUpdate,
+      onBudgetDetailDelete,
+      onBudgetDetailAdd,
+      onNumberInputChange,
+      onStringInputChange,
+      onModalClose,
+      onSaveYes,
+      onSaveNo,
+      onCloseYes,
+      onCloseNo,
+    },
   };
 };
