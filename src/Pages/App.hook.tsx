@@ -7,8 +7,16 @@ import { useLiveQuery } from "dexie-react-hooks";
 const maxPrice = 10000000;
 const maxNameLength = 20;
 
-export type AppType = {
+export type BudgetListProps = {
+  budgetListRecords: recordsType;
   onBudgetModalOpen: (index: number) => void;
+};
+
+export type BudgetTotalProps = {
+  total: number;
+};
+
+export type BudgetModalProps = {
   onBudgetDetailDelete: (index: number) => void;
   onBudgetDetailAdd: () => void;
   onModalClose: () => void;
@@ -18,21 +26,27 @@ export type AppType = {
   onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
   onSaveYes: () => void;
   onSaveNo: () => void;
-  total: number;
-  budgetListRecords: recordsType;
   budgetModalRecords: recordsType;
   budgetModalDisclosure: UseDisclosureReturn;
   closePopButtonDisclosure: UseDisclosureReturn;
   savePopButtonDisclosure: UseDisclosureReturn;
   isUpdate: boolean;
+  budgetCategory: string;
+};
+
+export type AppType = {
+  budgetListProps: BudgetListProps;
+  budgetTotalProps: BudgetTotalProps;
+  budgetModalProps: BudgetModalProps;
 };
 
 type useAppType = () => AppType;
 
 export const useApp: useAppType = () => {
   // 予算データ
-  // const [budgets, setBudgets] = useState<budgetType[]>();
   const budgets = useLiveQuery(async () => await budgetDB.budget.toArray(), []);
+  // 予算カテゴリ
+  const [budgetCategory, setBudgetCategory] = useState<string>("");
   // 予算詳細モーダル用のテンプレートデータ
   const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
   // 更新するbudgetsのインデックス
@@ -57,6 +71,7 @@ export const useApp: useAppType = () => {
       }));
       setBudgetModalRecords([...newRecords]);
       setUpdateBudgetIndex(index);
+      setBudgetCategory(budgets[index].category);
       setIsUpdate(false);
       budgetModalDisclosure.onOpen();
     },
@@ -192,22 +207,29 @@ export const useApp: useAppType = () => {
   }, []);
 
   return {
-    budgetModalDisclosure,
-    savePopButtonDisclosure,
-    onBudgetModalOpen,
-    onBudgetDetailDelete,
-    onBudgetDetailAdd,
-    onNumberInputChange,
-    onStringInputChange,
-    onModalClose,
-    onSaveYes,
-    onSaveNo,
-    total,
-    budgetListRecords,
-    budgetModalRecords,
-    closePopButtonDisclosure,
-    onCloseYes,
-    onCloseNo,
-    isUpdate,
+    budgetListProps: {
+      budgetListRecords,
+      onBudgetModalOpen,
+    },
+    budgetTotalProps: {
+      total,
+    },
+    budgetModalProps: {
+      budgetCategory,
+      budgetModalDisclosure,
+      savePopButtonDisclosure,
+      budgetModalRecords,
+      closePopButtonDisclosure,
+      isUpdate,
+      onBudgetDetailDelete,
+      onBudgetDetailAdd,
+      onNumberInputChange,
+      onStringInputChange,
+      onModalClose,
+      onSaveYes,
+      onSaveNo,
+      onCloseYes,
+      onCloseNo,
+    },
   };
 };
