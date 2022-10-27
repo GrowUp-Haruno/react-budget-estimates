@@ -1,8 +1,9 @@
 import { useDisclosure, UseDisclosureReturn } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { budgetDB, initializeBudgetDB, saveBudgetDB } from "../db/db";
+import { budgetDB, deleteBudgetDB, initializeBudgetDB, saveBudgetDB } from "../db/db";
 import { budgetListType, budgetType, recordsType } from "./App.model";
 import { useLiveQuery } from "dexie-react-hooks";
+import { BudgetDeleteProps } from "../components/organisms/BudgetDelete";
 
 const maxPrice = 10000000;
 const maxNameLength = 20;
@@ -38,6 +39,7 @@ export type AppType = {
   budgetListProps: BudgetListProps;
   budgetTotalProps: BudgetTotalProps;
   budgetModalProps: BudgetModalProps;
+  budgetDeleteProps: BudgetDeleteProps;
 };
 
 type useAppType = () => AppType;
@@ -206,6 +208,16 @@ export const useApp: useAppType = () => {
     initializeBudgetDB();
   }, []);
 
+  // データベース削除関連
+  const deleteDBDisclosure = useDisclosure();
+  const onYes = (): void => {
+    deleteBudgetDB();
+    deleteDBDisclosure.onClose();
+  };
+  const onNo = (): void => {
+    deleteDBDisclosure.onClose();
+  };
+
   return {
     budgetListProps: {
       budgetListRecords,
@@ -230,6 +242,11 @@ export const useApp: useAppType = () => {
       onSaveNo,
       onCloseYes,
       onCloseNo,
+    },
+    budgetDeleteProps: {
+      deleteDBDisclosure,
+      onYes,
+      onNo,
     },
   };
 };

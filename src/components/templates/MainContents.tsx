@@ -4,13 +4,20 @@ import { AppType } from "../../Pages/App.hook";
 import { BudgetTotal } from "../organisms/BudgetTotal";
 import { BudgetModal } from "../organisms/BudgetModal";
 import { MainLayout } from "../atoms/Layout";
+import { BudgetDelete } from "../organisms/BudgetDelete";
 
-export const MainContents: FC<AppType> = ({ budgetListProps, budgetTotalProps, budgetModalProps }) => {
+export const MainContents: FC<AppType> = ({
+  budgetListProps,
+  budgetTotalProps,
+  budgetModalProps,
+  budgetDeleteProps,
+}) => {
   return (
     <MainLayout>
-      <BudgetList {...budgetListProps} />
+      <BudgetList {...budgetListProps} isDisabled={budgetDeleteProps.deleteDBDisclosure.isOpen} />
       <BudgetTotal {...budgetTotalProps} />
       <BudgetModal {...budgetModalProps} />
+      <BudgetDelete {...budgetDeleteProps} />
     </MainLayout>
   );
 };
