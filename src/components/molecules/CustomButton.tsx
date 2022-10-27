@@ -33,6 +33,9 @@ export const SaveButon = forwardRef<CustomButtonProps, "button">((props, ref) =>
 export const YesButon: FC<CustomButtonProps> = (props) => {
   return <PrimaryButton {...props}>はい</PrimaryButton>;
 };
+export const OkButon: FC<CustomButtonProps> = (props) => {
+  return <PrimaryButton {...props}>OK</PrimaryButton>;
+};
 export const NoButon: FC<CustomButtonProps> = (props) => {
   return <SecondaryButton {...props}>いいえ</SecondaryButton>;
 };
