@@ -19,15 +19,11 @@ export default defineConfig({
         },
       },
     },
-    outDir:"../dist"
+    outDir: "../dist",
   },
-
   plugins: [
     react(),
     VitePWA({
-      devOptions: {
-        enabled: true,
-      },
       includeAssets: ["favicon.ico", "vite.svg"],
       manifest: {
         theme_color: "#f69435",
