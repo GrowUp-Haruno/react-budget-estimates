@@ -12,20 +12,14 @@ export const PrimaryLayout: FC<{ children: ReactNode }> = ({ children }) => {
 export const FooterLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <Center as="footer" bgColor="green.300" py={10}>
-      {children}
+      <Stack spacing={4}>{children}</Stack>
     </Center>
   );
 };
 
 export const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <Stack
-      as="main"
-      flexGrow={1}
-      justifyContent="start"
-      alignItems="center"
-      spacing={8}
-    >
+    <Stack as="main" flexGrow={1} justifyContent="start" alignItems="center" spacing={8}>
       {children}
     </Stack>
   );
@@ -33,7 +27,7 @@ export const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
 
 export const NavbarLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <Center as="footer" bgColor="green.300" py={10}>
+    <Center as="footer" bgColor="green.300" py={8}>
       {children}
     </Center>
   );

@@ -23,7 +23,7 @@ export const initializeBudgetDB = (): void => {
         await budgetDB.budget.bulkAdd([
           { id: 0, category: "移動費", budgetDetails: [{ name: "", price: 0 }] },
           { id: 1, category: "宿泊費", budgetDetails: [{ name: "", price: 0 }] },
-          { id: 2, category: "食費費", budgetDetails: [{ name: "", price: 0 }] },
+          { id: 2, category: "食費", budgetDetails: [{ name: "", price: 0 }] },
           { id: 3, category: "観光費", budgetDetails: [{ name: "", price: 0 }] },
           { id: 4, category: "お土産代", budgetDetails: [{ name: "", price: 0 }] },
         ]);
@@ -49,7 +49,7 @@ export const deleteBudgetDB = (): void => {
       await budgetDB.budget.bulkPut([
         { id: 0, category: "移動費", budgetDetails: [{ name: "", price: 0 }] },
         { id: 1, category: "宿泊費", budgetDetails: [{ name: "", price: 0 }] },
-        { id: 2, category: "食費費", budgetDetails: [{ name: "", price: 0 }] },
+        { id: 2, category: "食費", budgetDetails: [{ name: "", price: 0 }] },
         { id: 3, category: "観光費", budgetDetails: [{ name: "", price: 0 }] },
         { id: 4, category: "お土産代", budgetDetails: [{ name: "", price: 0 }] },
       ]);
