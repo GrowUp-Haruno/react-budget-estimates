@@ -1,4 +1,4 @@
-name: Pokemon PictureBook CICD
+name: Budget estimates CICD
 on:
   push:
     branches: main
