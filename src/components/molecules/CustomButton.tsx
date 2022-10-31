@@ -1,8 +1,7 @@
-import { ButtonProps, forwardRef, UseDisclosureReturn } from "@chakra-ui/react";
+import { forwardRef } from "@chakra-ui/react";
 import { FC } from "react";
+import { CustomButtonProps, PopButtonProps } from "../../commons/types";
 import { PrimaryButton, PrimaryPopButton, SecondaryButton } from "../atoms/Button";
-
-export type CustomButtonProps = Omit<ButtonProps, "children" | "colorScheme">;
 
 export const DetailButton: FC<CustomButtonProps> = (props) => {
   return <PrimaryButton {...props}>詳細</PrimaryButton>;
@@ -47,12 +46,7 @@ export const NoButon: FC<CustomButtonProps> = (props) => {
   return <SecondaryButton {...props}>いいえ</SecondaryButton>;
 };
 
-export const ClosePopButton: FC<{
-  onYes?: () => void;
-  onNo?: () => void;
-  closePopButtonDisclosure: UseDisclosureReturn;
-  isDisabled?: boolean;
-}> = ({ onYes = () => {}, onNo = () => {}, closePopButtonDisclosure, isDisabled }) => {
+export const ClosePopButton: FC<PopButtonProps> = ({ onYes = () => {}, onNo = () => {}, disclosure, isDisabled }) => {
   return (
     <PrimaryPopButton
       TriggerButton={CloseButton}
@@ -62,18 +56,13 @@ export const ClosePopButton: FC<{
         { Component: YesButon, callback: onYes },
         { Component: NoButon, callback: onNo },
       ]}
-      popButtonDisclosure={closePopButtonDisclosure}
+      popButtonDisclosure={disclosure}
       isDisabled={isDisabled}
     />
   );
 };
 
-export const SavePopButton: FC<{
-  onYes?: () => void;
-  onNo?: () => void;
-  savePopButtonDisclosure: UseDisclosureReturn;
-  isDisabled?: boolean;
-}> = ({ onYes = () => {}, onNo = () => {}, savePopButtonDisclosure, isDisabled }) => {
+export const SavePopButton: FC<PopButtonProps> = ({ onYes = () => {}, onNo = () => {}, disclosure, isDisabled }) => {
   return (
     <PrimaryPopButton
       TriggerButton={SaveButon}
@@ -83,18 +72,12 @@ export const SavePopButton: FC<{
         { Component: YesButon, callback: onYes },
         { Component: NoButon, callback: onNo },
       ]}
-      popButtonDisclosure={savePopButtonDisclosure}
+      popButtonDisclosure={disclosure}
       isDisabled={isDisabled}
     />
   );
 };
 
-type PopButtonProps = {
-  onYes?: () => void;
-  onNo?: () => void;
-  disclosure: UseDisclosureReturn;
-  isDisabled?: boolean;
-};
 export const DeleteDBPopButton: FC<PopButtonProps> = ({
   onYes = () => {},
   onNo = () => {},

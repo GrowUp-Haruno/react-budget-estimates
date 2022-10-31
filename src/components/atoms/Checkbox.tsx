@@ -1,19 +1,14 @@
-import { FC, ReactNode } from "react";
-import { Checkbox, CheckboxProps } from "@chakra-ui/react";
+import { FC } from "react";
+import { Checkbox } from "@chakra-ui/react";
+import { BaseCheckboxProps, PrimaryCheckboxProps } from "../../commons/types";
 
-type BaseCheckboxProps = {
-  children?: ReactNode;
-  colorScheme?: CheckboxProps["colorScheme"];
-  onChange?: CheckboxProps["onChange"];
-};
 const BaseCheckbox: FC<BaseCheckboxProps> = (props) => {
   return <Checkbox {...props} size={["sm", "sm", "md"]} />;
 };
 
-type CustomCheckboxProps = Omit<BaseCheckboxProps, "colorScheme">;
-export const PrimaryCheckbox: FC<CustomCheckboxProps> = (props) => {
+export const PrimaryCheckbox: FC<PrimaryCheckboxProps> = (props) => {
   return <BaseCheckbox {...props} colorScheme="green" />;
 };
-export const SecondaryCheckbox: FC<CustomCheckboxProps> = (props) => {
+export const SecondaryCheckbox: FC<PrimaryCheckboxProps> = (props) => {
   return <BaseCheckbox {...props} colorScheme="red" />;
 };

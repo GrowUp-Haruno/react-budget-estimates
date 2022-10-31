@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import {
   Modal,
   ModalBody,
@@ -7,16 +7,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  UseDisclosureReturn,
 } from "@chakra-ui/react";
-
-type PrimaryModalProps = {
-  modalDisclosure: UseDisclosureReturn;
-  title?: string;
-  Body?: ReactNode;
-  Foot?: ReactNode;
-  isModalCloseBUtton?: true;
-};
+import { PrimaryModalProps } from "../../commons/types";
 
 export const PrimaryModal: FC<PrimaryModalProps> = ({ modalDisclosure, title, Body, Foot, isModalCloseBUtton }) => {
   const { isOpen, onClose } = modalDisclosure;
@@ -31,7 +23,7 @@ export const PrimaryModal: FC<PrimaryModalProps> = ({ modalDisclosure, title, Bo
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
-        {isModalCloseBUtton ? <ModalCloseButton/> : <></>}
+        {isModalCloseBUtton ? <ModalCloseButton /> : <></>}
         <ModalBody>{Body}</ModalBody>
         <ModalFooter>{Foot}</ModalFooter>
       </ModalContent>

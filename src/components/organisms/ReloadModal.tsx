@@ -1,13 +1,10 @@
-import { UseDisclosureReturn } from "@chakra-ui/react";
 import { FC } from "react";
 import { PrimaryModal } from "../atoms/Modal";
 import { PrimaryText } from "../atoms/Text";
 import { OkButon } from "../molecules/CustomButton";
+import { ReloadModalProps } from "../../commons/types";
 
-export const ReloadModal: FC<{
-  reloadModalDisclosure: UseDisclosureReturn;
-  onUpdateOk?: () => void;
-}> = ({ reloadModalDisclosure,  onUpdateOk }) => {
+export const ReloadModal: FC<ReloadModalProps> = ({ reloadModalDisclosure, onUpdateOk }) => {
   return (
     <PrimaryModal
       title="新バージョンリリース"

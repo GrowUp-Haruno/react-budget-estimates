@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
 import { Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
-import { recordsType } from "../../models/App.model";
 import { PrimaryInput } from "./Input";
-import { CustomButtonProps } from "../molecules/CustomButton";
+import { recordsType } from "../../commons/models";
+import { CustomButtonProps } from "../../commons/types";
 
 export const PrimaryTable: FC<{
   Head: ReactNode;

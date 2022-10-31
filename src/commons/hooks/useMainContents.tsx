@@ -1,50 +1,14 @@
-import { useDisclosure, UseDisclosureReturn } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { budgetDB, deleteBudgetDB, initializeBudgetDB, saveBudgetDB } from "../db/db";
-import { budgetListType, budgetType, recordsType } from "../models/App.model";
+import { useDisclosure } from "@chakra-ui/react";
 import { useLiveQuery } from "dexie-react-hooks";
-import { BudgetDeleteProps } from "../components/organisms/BudgetDelete";
+import { budgetDB, deleteBudgetDB, initializeBudgetDB, saveBudgetDB } from "../db/db";
+import { budgetListType, budgetType, recordsType } from "../models";
+import { MainContentsProps } from "../types";
 
 const maxPrice = 10000000;
 const maxNameLength = 20;
 
-export type BudgetListProps = {
-  budgetListRecords: recordsType;
-  onBudgetModalOpen: (index: number) => void;
-};
-
-export type BudgetTotalProps = {
-  total: number;
-};
-
-export type BudgetModalProps = {
-  onBudgetDetailDelete: (index: number) => void;
-  onBudgetDetailAdd: () => void;
-  onModalClose: () => void;
-  onCloseYes: () => void;
-  onCloseNo: () => void;
-  onNumberInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-  onStringInputChange: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSaveYes: () => void;
-  onSaveNo: () => void;
-  budgetModalRecords: recordsType;
-  budgetModalDisclosure: UseDisclosureReturn;
-  closePopButtonDisclosure: UseDisclosureReturn;
-  savePopButtonDisclosure: UseDisclosureReturn;
-  isUpdate: boolean;
-  budgetCategory: string;
-};
-
-export type AppType = {
-  budgetListProps: BudgetListProps;
-  budgetTotalProps: BudgetTotalProps;
-  budgetModalProps: BudgetModalProps;
-  budgetDeleteProps: BudgetDeleteProps;
-};
-
-type useAppType = () => AppType;
-
-export const useApp: useAppType = () => {
+export const useMainContents = (): MainContentsProps => {
   // 予算データ
   const budgets = useLiveQuery(async () => await budgetDB.budget.toArray(), []);
   // 予算カテゴリ
@@ -222,6 +186,7 @@ export const useApp: useAppType = () => {
     budgetListProps: {
       budgetListRecords,
       onBudgetModalOpen,
+      isDisabled: deleteDBDisclosure.isOpen,
     },
     budgetTotalProps: {
       total,

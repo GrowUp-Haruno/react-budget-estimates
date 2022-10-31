@@ -1,21 +1,21 @@
 import { FC } from "react";
 import { PrimaryLayout } from "../components/atoms/Layout";
-import { Footer } from "../components/templates/Footer";
-import { MainContents } from "../components/templates/MainContents";
 import { Navbar } from "../components/templates/Navbar";
-import ReloadPrompt from "../components/templates/ReloadPrompt";
-import { useApp } from "./App.hook";
-import { useReloadPrompt } from "./ReloadPrompt.hook";
+import { MainContents } from "../components/templates/MainContents";
+import { Footer } from "../components/templates/Footer";
+import { ReloadPrompt } from "../components/templates/ReloadPrompt";
+import { useMainContents } from "../commons/hooks/useMainContents";
+import { useReloadPrompt } from "../commons/hooks/useReloadPrompt";
 
 export const App: FC = () => {
-  const AppHooks = useApp();
-  const ReloadPromptHooks = useReloadPrompt();
+  const mainContentsProps = useMainContents();
+  const reloadPromptProps = useReloadPrompt();
   return (
     <PrimaryLayout>
       <Navbar />
-      <MainContents {...AppHooks} />
+      <MainContents {...mainContentsProps} />
       <Footer />
-      <ReloadPrompt {...ReloadPromptHooks} />
+      <ReloadPrompt {...reloadPromptProps} />
     </PrimaryLayout>
   );
 };

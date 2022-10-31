@@ -1,13 +1,9 @@
-import { useDisclosure, UseDisclosureReturn } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect } from "react";
 import { useRegisterSW } from "virtual:pwa-register/react";
+import { ReloadPromptProps } from "../types";
 
-export type ReloadPromptType = {
-  onUpdateOk: () => void;
-  reloadModalDisclosure: UseDisclosureReturn;
-};
-
-export const useReloadPrompt = (): ReloadPromptType => {
+export const useReloadPrompt = (): ReloadPromptProps => {
   const {
     needRefresh: [needRefresh],
     updateServiceWorker,

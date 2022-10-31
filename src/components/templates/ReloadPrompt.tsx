@@ -1,9 +1,7 @@
 import { FC } from "react";
-import { ReloadPromptType } from "../../Pages/ReloadPrompt.hook";
 import { ReloadModal } from "../organisms/ReloadModal";
+import { ReloadPromptProps } from "../../commons/types";
 
-const ReloadPrompt: FC<ReloadPromptType> = ({ reloadModalDisclosure, onUpdateOk }) => {
+export const ReloadPrompt: FC<ReloadPromptProps> = ({ reloadModalDisclosure, onUpdateOk }) => {
   return <ReloadModal reloadModalDisclosure={reloadModalDisclosure} onUpdateOk={onUpdateOk} />;
 };
-
-export default ReloadPrompt;
