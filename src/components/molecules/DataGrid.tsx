@@ -1,6 +1,6 @@
 // import { ButtonProps } from "@chakra-ui/react";
 import { FC } from "react";
-import { recordsType } from "../../Pages/App.model";
+import { recordsType } from "../../models/App.model";
 import { PrimaryTable, PrimaryTableBody, PrimaryTableHead } from "../atoms/Table";
 import { CustomButtonProps } from "./CustomButton";
 

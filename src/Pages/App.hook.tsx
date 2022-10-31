@@ -1,7 +1,7 @@
 import { useDisclosure, UseDisclosureReturn } from "@chakra-ui/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { budgetDB, deleteBudgetDB, initializeBudgetDB, saveBudgetDB } from "../db/db";
-import { budgetListType, budgetType, recordsType } from "./App.model";
+import { budgetListType, budgetType, recordsType } from "../models/App.model";
 import { useLiveQuery } from "dexie-react-hooks";
 import { BudgetDeleteProps } from "../components/organisms/BudgetDelete";
 
