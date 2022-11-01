@@ -1,5 +1,5 @@
-import { useDisclosure } from "@chakra-ui/react";
 import { useCallback, useEffect } from "react";
+import { useDisclosure } from "@chakra-ui/react";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { ReloadPromptProps } from "../types";
 

@@ -1,5 +1,5 @@
-import { forwardRef } from "@chakra-ui/react";
 import { FC } from "react";
+import { forwardRef } from "@chakra-ui/react";
 import { CustomButtonProps, PopButtonProps } from "../../commons/types";
 import { PrimaryButton, PrimaryPopButton, SecondaryButton } from "../atoms/Button";
 

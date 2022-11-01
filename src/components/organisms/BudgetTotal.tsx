@@ -1,5 +1,5 @@
-import { Container, Text } from "@chakra-ui/react";
 import { FC } from "react";
+import { Container, Text } from "@chakra-ui/react";
 import { BudgetTotalProps } from "../../commons/types";
 
 export const BudgetTotal: FC<BudgetTotalProps> = ({ total }) => {

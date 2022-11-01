@@ -1,5 +1,5 @@
-import { Center, Stack } from "@chakra-ui/react";
 import { FC } from "react";
+import { Center, Stack } from "@chakra-ui/react";
 import { LayoutProps } from "../../commons/types";
 
 export const PrimaryLayout: FC<LayoutProps> = ({ children }) => {

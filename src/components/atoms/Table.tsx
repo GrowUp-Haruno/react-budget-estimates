@@ -1,13 +1,9 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { PrimaryInput } from "./Input";
-import { recordsType } from "../../commons/models";
-import { CustomButtonProps } from "../../commons/types";
+import { PrimaryTableBodyProps, PrimaryTableHeadProps, PrimaryTableProps } from "../../commons/types";
 
-export const PrimaryTable: FC<{
-  Head: ReactNode;
-  Body: ReactNode;
-}> = ({ Head, Body }) => {
+export const PrimaryTable: FC<PrimaryTableProps> = ({ Head, Body }) => {
   return (
     <TableContainer w="full">
       <Table size={["sm", "sm", "md"]}>
@@ -18,7 +14,7 @@ export const PrimaryTable: FC<{
   );
 };
 
-export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames }) => {
+export const PrimaryTableHead: FC<PrimaryTableHeadProps> = ({ columnNames }) => {
   return (
     <Tr backgroundColor="green.100">
       {columnNames.map((columnName, i) => (
@@ -30,20 +26,14 @@ export const PrimaryTableHead: FC<{ columnNames: string[] }> = ({ columnNames })
   );
 };
 
-export const PrimaryTableBody: FC<{
-  records: recordsType;
-  frontCheckbox?: {
-    Component: FC<{ onChange?: () => void; isChecked: boolean; isDisabled: boolean }>;
-    callback: (arg: number) => void;
-  };
-  backButton?: {
-    Component: FC<CustomButtonProps>;
-    callback: (arg: number) => void;
-  };
-  onNumberInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-  onStringInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
-  isDisabled: boolean;
-}> = ({ records, backButton, frontCheckbox, onNumberInputChange, onStringInputChange, isDisabled }) => {
+export const PrimaryTableBody: FC<PrimaryTableBodyProps> = ({
+  records,
+  backButton,
+  frontCheckbox,
+  onNumberInputChange,
+  onStringInputChange,
+  isDisabled,
+}) => {
   return (
     <>
       {records.map((record, recordIndex) => (

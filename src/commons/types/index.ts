@@ -1,5 +1,5 @@
-import { ButtonProps, CheckboxProps, ComponentWithAs, InputProps, UseDisclosureReturn } from "@chakra-ui/react";
 import { FC, ReactNode } from "react";
+import { ButtonProps, CheckboxProps, ComponentWithAs, InputProps, UseDisclosureReturn } from "@chakra-ui/react";
 import { recordsType } from "../models";
 
 export type BudgetListProps = {
@@ -115,4 +115,24 @@ export type PopButtonProps = {
   onNo?: () => void;
   disclosure: UseDisclosureReturn;
   isDisabled?: boolean;
+};
+
+export type PrimaryTableProps = {
+  Head: ReactNode;
+  Body: ReactNode;
+};
+export type PrimaryTableHeadProps = { columnNames: string[] };
+export type PrimaryTableBodyProps = {
+  records: recordsType;
+  frontCheckbox?: {
+    Component: FC<{ onChange?: () => void; isChecked: boolean; isDisabled: boolean }>;
+    callback: (arg: number) => void;
+  };
+  backButton?: {
+    Component: FC<CustomButtonProps>;
+    callback: (arg: number) => void;
+  };
+  onNumberInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onStringInputChange?: (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>) => void;
+  isDisabled: boolean;
 };
