@@ -4,6 +4,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { budgetDB, deleteBudgetDB, initializeBudgetDB, saveBudgetDB } from "../db/db";
 import { budgetListType, budgetType, recordsType } from "../models";
 import { MainContentsProps } from "../types";
+import { useImmer } from "use-immer";
 
 const maxPrice = 10000000;
 const maxNameLength = 20;
@@ -14,7 +15,7 @@ export const useMainContents = (): MainContentsProps => {
   // 予算カテゴリ
   const [budgetCategory, setBudgetCategory] = useState<string>("");
   // 予算詳細モーダル用のテンプレートデータ
-  const [budgetModalRecords, setBudgetModalRecords] = useState<recordsType>([]);
+  const [budgetModalRecords, setBudgetModalRecords] = useImmer<recordsType>([]);
   // 更新するbudgetsのインデックス
   const [updateBudgetIndex, setUpdateBudgetIndex] = useState<number | undefined>();
   // 予算変更の更新フラグ
@@ -47,9 +48,9 @@ export const useMainContents = (): MainContentsProps => {
   /** 予算詳細を仮削除 */
   const onBudgetDetailDelete = useCallback(
     (index: number): void => {
-      const newRecords: recordsType = budgetModalRecords.slice();
-      newRecords[index].isDelete = !newRecords[index].isDelete;
-      setBudgetModalRecords([...newRecords]);
+      setBudgetModalRecords((draftRecords) => {
+        draftRecords[index].isDelete = !draftRecords[index].isDelete;
+      });
       if (!isUpdate) setIsUpdate(true);
     },
     [budgetModalRecords]
@@ -57,23 +58,22 @@ export const useMainContents = (): MainContentsProps => {
 
   /** 予算詳細を仮追加 */
   const onBudgetDetailAdd = useCallback((): void => {
-    const newRecords: recordsType = budgetModalRecords.slice();
-    newRecords.push({ id: newRecords.length, fields: ["", 0], isDelete: false });
-    setBudgetModalRecords([...newRecords]);
+    setBudgetModalRecords((draftRecords) => {
+      draftRecords.push({ id: draftRecords.length, fields: ["", 0], isDelete: false });
+    });
     if (!isUpdate) setIsUpdate(true);
   }, [budgetModalRecords]);
 
   /** 数値変更関数 */
   const onNumberInputChange = useCallback(
     (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>): void => {
-      const newRecords: recordsType = budgetModalRecords.slice();
       const targetValue = e.target.value.replace(/,/g, "");
       // バリデーション
       if (isNaN(Number(targetValue))) return;
       if (Number(targetValue) >= maxPrice) return;
-
-      newRecords[recordIndex].fields[fieldIndex] = Number(targetValue);
-      setBudgetModalRecords([...newRecords]);
+      setBudgetModalRecords((draftRecords) => {
+        draftRecords[recordIndex].fields[fieldIndex] = Number(targetValue);
+      });
       if (!isUpdate) setIsUpdate(true);
     },
     [budgetModalRecords]
@@ -82,14 +82,14 @@ export const useMainContents = (): MainContentsProps => {
   /** 文字変更関数 */
   const onStringInputChange = useCallback(
     (recordIndex: number, fieldIndex: number, e: React.ChangeEvent<HTMLInputElement>): void => {
-      const newRecords: recordsType = budgetModalRecords.slice();
       const regex = /[&'`"<>]/g;
       // バリデーション
       if (regex.test(e.target.value)) return;
       if (!(e.target.value.length <= maxNameLength)) return;
 
-      newRecords[recordIndex].fields[fieldIndex] = e.target.value.replace(regex, "");
-      setBudgetModalRecords([...newRecords]);
+      setBudgetModalRecords((draftRecords) => {
+        draftRecords[recordIndex].fields[fieldIndex] = e.target.value.replace(regex, "");
+      });
       if (!isUpdate) setIsUpdate(true);
     },
     [budgetModalRecords]
@@ -158,9 +158,10 @@ export const useMainContents = (): MainContentsProps => {
     });
     tempBudgets[updateBudgetIndex].budgetDetails = newBudgetDetails;
     saveBudgetDB(tempBudgets[updateBudgetIndex]);
-    setBudgetModalRecords([...undeleteBudgetModalRecords]);
+    setBudgetModalRecords([]);
     setIsUpdate(false);
     savePopButtonDisclosure.onClose();
+    budgetModalDisclosure.onClose();
   }, [updateBudgetIndex, budgetModalRecords, budgets]);
 
   /** 保存ポップボタンの「いいえ」を選択した場合の処理 */
