@@ -1,5 +1,5 @@
 import Dexie, { Table } from "dexie";
-import { budgetType } from "../Pages/App.model";
+import { budgetType } from "../models";
 
 class BudgetDexie extends Dexie {
   budget!: Table<budgetType>;

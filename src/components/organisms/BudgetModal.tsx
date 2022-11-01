@@ -1,10 +1,10 @@
-import { VStack, HStack } from "@chakra-ui/react";
 import { FC } from "react";
-import { BudgetModalProps } from "../../Pages/App.hook";
+import { VStack, HStack } from "@chakra-ui/react";
 import { PrimaryModal } from "../atoms/Modal";
 import { AddButton, CloseButton, ClosePopButton, SavePopButton } from "../molecules/CustomButton";
 import { DeleteCheckbox } from "../molecules/CustomCheckbox";
 import { DataGrid } from "../molecules/DataGrid";
+import { BudgetModalProps } from "../../commons/types";
 
 export const BudgetModal: FC<BudgetModalProps> = ({
   onBudgetDetailDelete,
@@ -49,13 +49,13 @@ export const BudgetModal: FC<BudgetModalProps> = ({
             <SavePopButton
               onYes={onSaveYes}
               onNo={onSaveNo}
-              savePopButtonDisclosure={savePopButtonDisclosure}
+              disclosure={savePopButtonDisclosure}
               isDisabled={closePopButtonDisclosure.isOpen}
             />
             <ClosePopButton
               onYes={onCloseYes}
               onNo={onCloseNo}
-              closePopButtonDisclosure={closePopButtonDisclosure}
+              disclosure={closePopButtonDisclosure}
               isDisabled={savePopButtonDisclosure.isOpen}
             />
           </HStack>

@@ -3,8 +3,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  ButtonProps,
-  ComponentWithAs,
   forwardRef,
   Popover,
   PopoverArrow,
@@ -14,30 +12,29 @@ import {
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
-  // Portal,
-  UseDisclosureReturn,
 } from "@chakra-ui/react";
+import { BaseButtonProps, PrimaryButtonProps, PrimaryPopButtonProps } from "../../commons/types";
 
-const BaseButto = forwardRef<Omit<ButtonProps, "size">, "button">((props, ref) => {
+const BaseButto = forwardRef<BaseButtonProps, "button">((props, ref) => {
   return <Button {...props} size={["xs", "sm", "md"]} ref={ref} />;
 });
 
-export const PrimaryButton = forwardRef<Omit<ButtonProps, "colorScheme">, "button">((props, ref) => {
+export const PrimaryButton = forwardRef<PrimaryButtonProps, "button">((props, ref) => {
   return <BaseButto {...props} colorScheme="green" ref={ref} />;
 });
 
-export const SecondaryButton = forwardRef<Omit<ButtonProps, "colorScheme">, "button">((props, ref) => {
+export const SecondaryButton = forwardRef<PrimaryButtonProps, "button">((props, ref) => {
   return <BaseButto {...props} colorScheme="red" ref={ref} />;
 });
 
-export const PrimaryPopButton: FC<{
-  TriggerButton: ComponentWithAs<"button", Omit<ButtonProps, "children" | "colorScheme">>;
-  footerButtons: Array<{ Component: FC<{ onClick?: ButtonProps["onClick"] }>; callback: () => void }>;
-  title: string;
-  message: string;
-  popButtonDisclosure: UseDisclosureReturn;
-  isDisabled?: boolean;
-}> = ({ title, TriggerButton, message, footerButtons, popButtonDisclosure, isDisabled = false }) => {
+export const PrimaryPopButton: FC<PrimaryPopButtonProps> = ({
+  title,
+  TriggerButton,
+  message,
+  footerButtons,
+  popButtonDisclosure,
+  isDisabled = false,
+}) => {
   const { isOpen, onToggle, onClose } = popButtonDisclosure;
 
   return (

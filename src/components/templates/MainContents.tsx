@@ -1,12 +1,12 @@
 import { FC } from "react";
+import { MainLayout } from "../atoms/Layout";
 import { BudgetList } from "../organisms/BudgetList";
-import { AppType } from "../../Pages/App.hook";
 import { BudgetTotal } from "../organisms/BudgetTotal";
 import { BudgetModal } from "../organisms/BudgetModal";
-import { MainLayout } from "../atoms/Layout";
 import { BudgetDelete } from "../organisms/BudgetDelete";
+import { MainContentsProps } from "../../commons/types";
 
-export const MainContents: FC<AppType> = ({
+export const MainContents: FC<MainContentsProps> = ({
   budgetListProps,
   budgetTotalProps,
   budgetModalProps,
@@ -14,7 +14,7 @@ export const MainContents: FC<AppType> = ({
 }) => {
   return (
     <MainLayout>
-      <BudgetList {...budgetListProps} isDisabled={budgetDeleteProps.deleteDBDisclosure.isOpen} />
+      <BudgetList {...budgetListProps} />
       <BudgetTotal {...budgetTotalProps} />
       <BudgetModal {...budgetModalProps} />
       <BudgetDelete {...budgetDeleteProps} />

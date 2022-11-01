@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import {
   Drawer,
   DrawerBody,
@@ -8,14 +8,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
 } from "@chakra-ui/react";
-
-type PrimaryDrawerProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  Body?: ReactNode;
-  Foot?: ReactNode;
-};
+import { PrimaryDrawerProps } from "../../commons/types";
 
 export const PrimaryDra: FC<PrimaryDrawerProps> = ({ isOpen, onClose, title, Body, Foot }) => {
   return (

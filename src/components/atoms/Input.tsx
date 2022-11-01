@@ -1,13 +1,12 @@
-import { Input, InputProps } from "@chakra-ui/react";
 import { FC } from "react";
+import { Input } from "@chakra-ui/react";
+import { BaseInputProps, PrimaryInputProps } from "../../commons/types";
 
-export const BaseInput: FC<Omit<InputProps, "size" | "variant">> = (props) => {
+export const BaseInput: FC<BaseInputProps> = (props) => {
   return <Input {...props} size={["xs", "xs", "md"]} variant="filled" />;
 };
 
-export const PrimaryInput: FC<
-  Omit<InputProps, "size" | "variant" | "bg" | "color" | "bgColor"> & { isDelete?: boolean }
-> = ({ isDelete, ...props }) => {
+export const PrimaryInput: FC<PrimaryInputProps> = ({ isDelete, ...props }) => {
   if (isDelete === undefined) return <BaseInput {...props} />;
   return (
     <BaseInput
